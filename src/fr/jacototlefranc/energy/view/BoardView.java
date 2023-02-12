@@ -2,27 +2,63 @@ package fr.jacototlefranc.energy.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 
-import fr.jacototlefranc.energy.controller.TileController;
 import fr.jacototlefranc.energy.model.Level;
 import fr.jacototlefranc.energy.model.tile.Tile;
+import fr.jacototlefranc.energy.model.tile.info.TileShape;
+import fr.jacototlefranc.energy.observer.Observer;
 
-public class BoardView extends JPanel {
+public class BoardView extends JPanel implements Observer {
+
+    private Level level;
+    private List<TileView> tvs = new ArrayList<>();
 
     public BoardView(Level lvl) {
-
-        GridLayout gl = new GridLayout(lvl.getSizeX(), lvl.getSizeY());
-        this.setLayout(gl);
+        this.level = lvl;
         this.setBackground(Color.BLACK);
-        this.setPreferredSize(new Dimension(lvl.getSizeY() * 120, lvl.getSizeX() * 120));
+
+        if (level.getTilesShape() == TileShape.SQUARE) {
+            this.setPreferredSize(new Dimension(level.getSizeY() * 120, level.getSizeX() * 120));
+        } else {
+            this.setPreferredSize(new Dimension(level.getSizeY() * 120  , level.getSizeX() * 104 + 52));
+        }
 
         for(Tile t : lvl.getTiles()) {
             TileView tv = new TileView(t);
-            new TileController(t, tv);
-            this.add(tv);
+            tv.addObserver(this);
+            tvs.add(tv);
         }
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        for (int i = 0; i < level.getTiles().size(); i++) {
+
+            TileView tv = tvs.get(i);
+
+            int x = i % level.getSizeY();
+            int y = i / level.getSizeY();
+
+            if (tv.getTile().getShape() == TileShape.HEXAGON) {
+                if (x % 2 == 1) {
+                    g.drawImage(tv, x * 91, y * 104 + 52, null);
+                } else {
+                    g.drawImage(tv, x * 91, y * 104, null);
+                }
+            } else {
+                g.drawImage(tv, x * 120, y * 120, null);
+            }
+        }
+    }
+
+    @Override
+    public void update() {
+        this.repaint();
     }
 }

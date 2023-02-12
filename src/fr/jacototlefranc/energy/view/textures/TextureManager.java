@@ -1,5 +1,7 @@
 package fr.jacototlefranc.energy.view.textures;
 
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -45,6 +47,9 @@ public final class TextureManager {
     private BufferedImage square_link_top_to_bottom_powered;
     private BufferedImage square_link_left_to_right_powered;
 
+    private BufferedImage hexagonal_component_link_top;
+    private BufferedImage hexagonal_component_link_top_right;
+
     // tile outline
     private BufferedImage square_outline;
     private BufferedImage hexagonal_outline;
@@ -66,7 +71,9 @@ public final class TextureManager {
             square_lightbulb_powered = canva.getSubimage(120 * 2, 120 * 5, 120, 120);
             hexagonal_lightbulb = canva.getSubimage(120 * 5, 120, 120, 120);
 
-            /*************************************** COMPONENT LINKS **********************************************/
+            /***************************************
+             * COMPONENT LINKS
+             **********************************************/
             square_component_link_top = canva.getSubimage(0, 120 * 2, 120, 120);
             square_component_link_right = rotateImage(square_component_link_top);
             square_component_link_bottom = rotateImage(square_component_link_right);
@@ -76,21 +83,24 @@ public final class TextureManager {
             square_component_link_right_powered = rotateImage(square_component_link_top_powered);
             square_component_link_bottom_powered = rotateImage(square_component_link_right_powered);
             square_component_link_left_powered = rotateImage(square_component_link_bottom_powered);
+
+            hexagonal_component_link_top = square_component_link_top;
+            hexagonal_component_link_top_right = rotateImageByDegrees(hexagonal_component_link_top, 60);
             /**************************************************************************************************/
 
-
-            /***************************************** STRAIGHT LINES ********************************************/
+            /*****************************************
+             * STRAIGHT LINES
+             ********************************************/
             square_link_top_to_bottom = canva.getSubimage(120 * 2, 120 * 2, 120, 120);
-            square_link_left_to_right = rotateImage(square_link_top_to_bottom);   
-            
+            square_link_left_to_right = rotateImage(square_link_top_to_bottom);
+
             square_link_top_to_bottom_powered = canva.getSubimage(120 * 2, 120 * 5, 120, 120);
             square_link_left_to_right_powered = rotateImage(square_link_top_to_bottom_powered);
             /**************************************************************************************************/
 
-
-
-
-            /*************************************** CURVED LINES ********************************************/
+            /***************************************
+             * CURVED LINES
+             ********************************************/
             square_curve_link_top_to_right = canva.getSubimage(120, 120 * 2, 120, 120);
             square_curve_link_right_to_bottom = rotateImage(square_curve_link_top_to_right);
             square_curve_link_bottom_to_left = rotateImage(square_curve_link_right_to_bottom);
@@ -102,17 +112,15 @@ public final class TextureManager {
             square_curve_link_left_to_top_powered = rotateImage(square_curve_link_bottom_to_left_powered);
             /**************************************************************************************************/
 
-
-
-
-            /******************************************* OUTLINES *********************************************/
+            /*******************************************
+             * OUTLINES
+             *********************************************/
             square_outline = canva.getSubimage(0, 0, 120, 120);
             hexagonal_outline = canva.getSubimage(120 * 3, 0, 120, 120);
 
             square_outline_powered = canva.getSubimage(0, 120 * 3, 120, 120);
-            hexagonal_outline_powered = canva.getSubimage(120 * 3, 120 * 3, 120, 120);            
+            hexagonal_outline_powered = canva.getSubimage(120 * 3, 120 * 3, 120, 120);
             /**************************************************************************************************/
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -129,6 +137,32 @@ public final class TextureManager {
         }
 
         return newImage;
+    }
+
+    public BufferedImage rotateImageByDegrees(BufferedImage img, double angle) {
+        double rads = Math.toRadians(angle);
+        double sin = Math.abs(Math.sin(rads)), cos = Math.abs(Math.cos(rads));
+        int w = img.getWidth();
+        int h = img.getHeight();
+        int newWidth = (int) Math.floor(w * cos + h * sin);
+        int newHeight = (int) Math.floor(h * cos + w * sin);
+
+        BufferedImage rotated = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = rotated.createGraphics();
+        AffineTransform at = new AffineTransform();
+        at.translate((newWidth - w) / 2, (newHeight - h) / 2);
+
+        int x = w / 2;
+        int y = h / 2;
+
+        at.rotate(rads, x, y);
+        g2d.setTransform(at);
+        g2d.drawImage(img, 0, 0, null);
+        // g2d.setColor(Color.RED);
+        g2d.drawRect(0, 0, newWidth - 1, newHeight - 1);
+        g2d.dispose();
+
+        return rotated;
     }
 
     public BufferedImage getTexture(TextureName name, boolean powered) {
@@ -173,9 +207,9 @@ public final class TextureManager {
                 case HEXAGONAL_LIGHTBULB:
                     return hexagonal_lightbulb;
                 case HEXAGONAL_COMPONENT_LINK_TOP:
-                    // TODO
+                    return hexagonal_component_link_top;
                 case HEXAGONAL_COMPONENT_LINK_TOP_RIGHT:
-                    // TODO
+                    return hexagonal_component_link_top_right;
                 case HEXAGONAL_COMPONENT_LINK_BOTTOM_RIGHT:
                     // TODO
                 case HEXAGONAL_COMPONENT_LINK_BOTTOM:
@@ -224,9 +258,9 @@ public final class TextureManager {
                 case HEXAGONAL_LIGHTBULB:
                     return hexagonal_lightbulb;
                 case HEXAGONAL_COMPONENT_LINK_TOP:
-                    // TODO
+                    return hexagonal_component_link_top;
                 case HEXAGONAL_COMPONENT_LINK_TOP_RIGHT:
-                    // TODO
+                    return hexagonal_component_link_top_right;  
                 case HEXAGONAL_COMPONENT_LINK_BOTTOM_RIGHT:
                     // TODO
                 case HEXAGONAL_COMPONENT_LINK_BOTTOM:

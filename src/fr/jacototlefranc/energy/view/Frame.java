@@ -9,6 +9,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
+import fr.jacototlefranc.energy.controller.PlayController;
 import fr.jacototlefranc.energy.model.Level;
 import fr.jacototlefranc.energy.model.LevelParser;
 
@@ -17,10 +18,14 @@ public class Frame extends JFrame {
     public Frame(String title) {
         super(title);
 
-        File f = new File("res/lvls/level5.nrg");
+        File f = new File("res/lvls/level6.nrg");
         Level lvl = LevelParser.parse(f);
+        lvl.shuffle();
 
         BoardView bv = new BoardView(lvl);
+        PlayController ctrl = new PlayController(lvl);
+        this.getContentPane().addMouseListener(ctrl);
+
         this.getContentPane().add(bv);
 
         JMenuBar menubar = new JMenuBar();

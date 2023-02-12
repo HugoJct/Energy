@@ -9,7 +9,7 @@ import fr.jacototlefranc.energy.model.tile.info.TileShape;
 import fr.jacototlefranc.energy.observer.Observable;
 import fr.jacototlefranc.energy.observer.Observer;
 
-public class Tile implements Observable, Observer{
+public class Tile implements Observable{
 
     private List<Observer> observers = new ArrayList<>();
 
@@ -120,10 +120,5 @@ public class Tile implements Observable, Observer{
         for(Observer o : observers) {
             o.update();
         }
-    }
-
-    @Override
-    public void update() {
-        notifyObserver();
     }
 }

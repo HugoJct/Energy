@@ -30,7 +30,7 @@ public class LevelParser {
                     shape = TileShape.SQUARE;
             }
 
-            lvl = new Level(sizeX, sizeY);
+            lvl = new Level(sizeX, sizeY, shape);
 
             Tile t = null;
             while (sc.hasNext()) {

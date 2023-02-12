@@ -1,38 +1,47 @@
 package fr.jacototlefranc.energy.view;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
-
-import javax.swing.JPanel;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.jacototlefranc.energy.model.tile.Tile;
 import fr.jacototlefranc.energy.model.tile.info.Component;
 import fr.jacototlefranc.energy.model.tile.info.TileShape;
+import fr.jacototlefranc.energy.observer.Observable;
 import fr.jacototlefranc.energy.observer.Observer;
 import fr.jacototlefranc.energy.view.textures.TextureManager;
 import fr.jacototlefranc.energy.view.textures.TextureName;
 
-public class TileView extends JPanel implements Observer {
+public class TileView extends BufferedImage implements Observer, Observable {
+
+    private List<Observer> observers = new ArrayList<>();
 
     private Tile t;
     private TextureManager tm;
 
     public TileView(Tile t) {
-        super();
+        super(120, 120, TYPE_INT_ARGB);
         this.t = t;
         tm = new TextureManager();
 
-        this.setBackground(Color.BLACK);
-        this.setPreferredSize(new Dimension(120, 120));
         t.addObserver(this);
+
+        paint();
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    public Tile getTile() {
+        return t;
+    }
 
+    protected void paint() {
+
+        Graphics g = this.getGraphics();
         boolean powered = t.getSides()[0].isPowered() || t.getSides()[1].isPowered() || t.getSides()[2].isPowered() || t.getSides()[3].isPowered();
+
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, 120, 120);
 
         if (t.getShape() == TileShape.SQUARE) {
 
@@ -102,7 +111,10 @@ public class TileView extends JPanel implements Observer {
             g.drawImage(tm.getTexture(TextureName.HEXAGONAL_OUTLINE, powered), 0, 0, null);
 
             if (t.getSides()[0].isConnected()) {
-                g.drawImage(tm.getTexture(TextureName.SQUARE_COMPONENT_LINK_TOP, powered), 0, 0, null);
+                g.drawImage(tm.getTexture(TextureName.HEXAGONAL_COMPONENT_LINK_TOP, powered), 0, 0, null);
+            }
+            if(t.getSides()[1].isConnected()) {
+                g.drawImage(tm.getTexture(TextureName.HEXAGONAL_COMPONENT_LINK_TOP_RIGHT, powered), 0, 0, null);
             }
             if (t.getSides()[3].isConnected()) {
                 g.drawImage(tm.getTexture(TextureName.SQUARE_COMPONENT_LINK_BOTTOM, powered), 0, 0, null);
@@ -120,6 +132,19 @@ public class TileView extends JPanel implements Observer {
 
     @Override
     public void update() {
-        this.repaint();
+        paint();
+        notifyObserver();
+    }
+
+    @Override
+    public void addObserver(Observer o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void notifyObserver() {
+        for(Observer o : observers) {
+            o.update();
+        }
     }
 }
