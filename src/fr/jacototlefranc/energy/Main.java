@@ -1,9 +1,9 @@
 package fr.jacototlefranc.energy;
 
-import fr.jacototlefranc.energy.view.Frame;
+import fr.jacototlefranc.energy.controller.Game;
 
 public class Main {
     public static void main(String[] args) {
-        new Frame("Energy");
+        new Game("Energy");
     }
 }

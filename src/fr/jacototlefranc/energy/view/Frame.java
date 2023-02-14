@@ -1,44 +1,32 @@
 package fr.jacototlefranc.energy.view;
 
-import java.awt.event.KeyEvent;
-import java.io.File;
-
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.KeyStroke;
 
-import fr.jacototlefranc.energy.controller.PlayController;
 import fr.jacototlefranc.energy.model.Level;
-import fr.jacototlefranc.energy.model.LevelParser;
 
 public class Frame extends JFrame {
+    private JMenuBar menubar;
+    private JMenu files;
+    private JMenuItem quit;
 
-    public Frame(String title) {
+    private BoardView boardView;
+
+    public Frame(String title, Level gameLevel) {
         super(title);
 
-        File f = new File("res/lvls/level6.nrg");
-        Level lvl = LevelParser.parse(f);
-        lvl.shuffle();
+        this.boardView = new BoardView(gameLevel);
 
-        BoardView bv = new BoardView(lvl);
-        PlayController ctrl = new PlayController(lvl);
-        this.getContentPane().addMouseListener(ctrl);
+        this.getContentPane().add(this.boardView);
 
-        this.getContentPane().add(bv);
+        this.menubar = new JMenuBar();
+        this.files = new JMenu("Fichier");
+        this.quit = new JMenuItem("Quitter");
 
-        JMenuBar menubar = new JMenuBar();
-        JMenu files = new JMenu("Fichier");
-        JMenuItem quit = new JMenuItem("Quitter");
-
-        quit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_DOWN_MASK));
-        quit.addActionListener(e -> {
-            System.exit(0);
-        });
-
-        files.add(quit);
-        menubar.add(files);
+        this.files.add(quit);
+        this.menubar.add(files);
 
         this.setJMenuBar(menubar);
 
@@ -47,6 +35,17 @@ public class Frame extends JFrame {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
+    }
+
+    public JMenuBar getMenubar() {
+        return menubar;
+    }
+    public JMenu getFiles() {
+        return files;
+    }
+
+    public JMenuItem getQuit() {
+        return quit;
     }
 
 }
