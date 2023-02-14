@@ -16,10 +16,12 @@ public class Tile implements Observable{
     private TileShape shape;
     private Component content;
     private TileEdge[] sides;
+    private boolean powered;
 
     public Tile(TileBuilder tb) {
         this.shape = tb.shape;
         this.content = tb.content;
+        this.powered = false;
 
         switch (this.shape) {
             case HEXAGON:
@@ -35,9 +37,7 @@ public class Tile implements Observable{
         }
         
         if(this.content == Component.OUTLET) {
-            for(TileEdge te : sides) {
-                te.setPowered(true);
-            }
+            powered = true;
         }
     }
 
@@ -69,6 +69,10 @@ public class Tile implements Observable{
         return s;
     }
 
+    public boolean isPowered() {
+        return this.powered;
+    }
+
     public TileShape getShape() {
         return this.shape;
     }
@@ -79,6 +83,10 @@ public class Tile implements Observable{
 
     public TileEdge[] getSides() {
         return this.sides;
+    }
+
+    public void setPowered(boolean newState) {
+        this.powered = newState;
     }
 
     public void setContent(Component newContent) {

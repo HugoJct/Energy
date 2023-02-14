@@ -39,7 +39,7 @@ public class TileView extends BufferedImage implements Observer, Observable {
     protected void paint() {
 
         Graphics g = this.getGraphics();
-        boolean powered = t.getSides()[0].isPowered() || t.getSides()[1].isPowered() || t.getSides()[2].isPowered() || t.getSides()[3].isPowered();
+        boolean powered = t.isPowered() || t.isPowered() || t.isPowered() || t.isPowered();
 
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
