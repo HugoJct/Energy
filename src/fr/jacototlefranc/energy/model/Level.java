@@ -64,6 +64,41 @@ public class Level {
     }
 
     public boolean isWinning() {
+
+        for (int i = 0 ; i < tiles.size() ; i++) {
+            Tile currentTile = tiles.get(i);
+
+            switch(currentTile.getContent()) {
+                case LIGHTBULB:  break;
+                case OUTLET: break;
+                case WIFI: break;
+                default: break;
+            }
+
+            if (currentTile.getContent() == Component.OUTLET)
+                return true;
+    
+            int currentTilePosX = i%sizeX;
+            int currentTilePosY = i/sizeX;
+        }
+        
+        return true;
+    }
+
+    private boolean isFullyConnected(Tile t) {
+        if (t.getShape() == TileShape.SQUARE) {
+            for (int i = 0 ; i < 4 ; i++) {
+                if (!t.getSides()[i].isConnected()) {
+                    return false;
+                }
+            }
+        } else {
+            for (int i = 0 ; i < 6 ; i++) {
+                if (!t.getSides()[i].isConnected()) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
 
