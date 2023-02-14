@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import fr.jacototlefranc.energy.model.Level;
 import fr.jacototlefranc.energy.model.tile.Tile;
+import fr.jacototlefranc.energy.model.tile.info.TileProps;
 import fr.jacototlefranc.energy.model.tile.info.TileShape;
 import fr.jacototlefranc.energy.observer.Observer;
 
@@ -23,9 +24,9 @@ public class BoardView extends JPanel implements Observer {
         this.setBackground(Color.BLACK);
 
         if (level.getTilesShape() == TileShape.SQUARE) {
-            this.setPreferredSize(new Dimension(level.getSizeY() * 120, level.getSizeX() * 120));
+            this.setPreferredSize(new Dimension(level.getSizeY() * TileProps.TILE_SIZE, level.getSizeX() * TileProps.TILE_SIZE));
         } else {
-            this.setPreferredSize(new Dimension(level.getSizeY() * 120  , level.getSizeX() * 104 + 52));
+            this.setPreferredSize(new Dimension(level.getSizeY() * TileProps.TILE_SIZE  , level.getSizeX() * 104 + 52));
         }
 
         for(Tile t : lvl.getTiles()) {
@@ -52,7 +53,7 @@ public class BoardView extends JPanel implements Observer {
                     g.drawImage(tv, x * 91, y * 104, null);
                 }
             } else {
-                g.drawImage(tv, x * 120, y * 120, null);
+                g.drawImage(tv, x * TileProps.TILE_SIZE, y * TileProps.TILE_SIZE, null);
             }
         }
     }

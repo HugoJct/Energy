@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import fr.jacototlefranc.energy.model.Level;
 import fr.jacototlefranc.energy.model.tile.Tile;
 import fr.jacototlefranc.energy.model.tile.info.Component;
+import fr.jacototlefranc.energy.model.tile.info.TileProps;
 
 public class PlayController extends MouseAdapter {
 
@@ -18,8 +19,8 @@ public class PlayController extends MouseAdapter {
     @Override
     public void mouseClicked(MouseEvent e) {
         
-        int x = e.getX() / 120;
-        int y = e.getY() / 120;
+        int x = e.getX() / TileProps.TILE_SIZE;
+        int y = e.getY() / TileProps.TILE_SIZE;
 
         int index = x;
 

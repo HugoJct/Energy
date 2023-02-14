@@ -8,6 +8,7 @@ import java.util.List;
 
 import fr.jacototlefranc.energy.model.tile.Tile;
 import fr.jacototlefranc.energy.model.tile.info.Component;
+import fr.jacototlefranc.energy.model.tile.info.TileProps;
 import fr.jacototlefranc.energy.model.tile.info.TileShape;
 import fr.jacototlefranc.energy.observer.Observable;
 import fr.jacototlefranc.energy.observer.Observer;
@@ -22,7 +23,7 @@ public class TileView extends BufferedImage implements Observer, Observable {
     private TextureManager tm;
 
     public TileView(Tile t) {
-        super(120, 120, TYPE_INT_ARGB);
+        super(TileProps.TILE_SIZE, TileProps.TILE_SIZE, TYPE_INT_ARGB);
         this.t = t;
         tm = new TextureManager();
 
@@ -41,7 +42,7 @@ public class TileView extends BufferedImage implements Observer, Observable {
         boolean powered = t.getSides()[0].isPowered() || t.getSides()[1].isPowered() || t.getSides()[2].isPowered() || t.getSides()[3].isPowered();
 
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, 120, 120);
+        g.fillRect(0, 0, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
 
         if (t.getShape() == TileShape.SQUARE) {
 

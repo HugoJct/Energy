@@ -7,6 +7,8 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
+import fr.jacototlefranc.energy.model.tile.info.TileProps;
+
 public final class TextureManager {
 
     // components
@@ -60,26 +62,26 @@ public final class TextureManager {
         try {
             BufferedImage canva = ImageIO.read(new File("res/tex/tuiles.png"));
 
-            square_outlet = canva.getSubimage(0, 120 * 4, 120, 120);
-            hexagonal_outlet = canva.getSubimage(120 * 3, 120 * 4, 120, 120);
+            square_outlet = canva.getSubimage(0, TileProps.TILE_SIZE * 4, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            hexagonal_outlet = canva.getSubimage(TileProps.TILE_SIZE * 3, TileProps.TILE_SIZE * 4, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
 
-            square_wifi = canva.getSubimage(120, 120, 120, 120);
-            square_wifi_powered = canva.getSubimage(120, 120 * 5, 120, 120);
-            hexagonal_wifi = canva.getSubimage(120 * 4, 120, 120, 120);
+            square_wifi = canva.getSubimage(TileProps.TILE_SIZE, TileProps.TILE_SIZE, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            square_wifi_powered = canva.getSubimage(TileProps.TILE_SIZE, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            hexagonal_wifi = canva.getSubimage(TileProps.TILE_SIZE * 4, TileProps.TILE_SIZE, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
 
-            square_lightbulb = canva.getSubimage(120 * 2, 120, 120, 120);
-            square_lightbulb_powered = canva.getSubimage(120 * 2, 120 * 5, 120, 120);
-            hexagonal_lightbulb = canva.getSubimage(120 * 5, 120, 120, 120);
+            square_lightbulb = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            square_lightbulb_powered = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            hexagonal_lightbulb = canva.getSubimage(TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
 
             /***************************************
              * COMPONENT LINKS
              **********************************************/
-            square_component_link_top = canva.getSubimage(0, 120 * 2, 120, 120);
+            square_component_link_top = canva.getSubimage(0, TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
             square_component_link_right = rotateImage(square_component_link_top);
             square_component_link_bottom = rotateImage(square_component_link_right);
             square_component_link_left = rotateImage(square_component_link_bottom);
 
-            square_component_link_top_powered = canva.getSubimage(0, 120 * 5, 120, 120);
+            square_component_link_top_powered = canva.getSubimage(0, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
             square_component_link_right_powered = rotateImage(square_component_link_top_powered);
             square_component_link_bottom_powered = rotateImage(square_component_link_right_powered);
             square_component_link_left_powered = rotateImage(square_component_link_bottom_powered);
@@ -91,22 +93,22 @@ public final class TextureManager {
             /*****************************************
              * STRAIGHT LINES
              ********************************************/
-            square_link_top_to_bottom = canva.getSubimage(120 * 2, 120 * 2, 120, 120);
+            square_link_top_to_bottom = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
             square_link_left_to_right = rotateImage(square_link_top_to_bottom);
 
-            square_link_top_to_bottom_powered = canva.getSubimage(120 * 2, 120 * 5, 120, 120);
+            square_link_top_to_bottom_powered = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
             square_link_left_to_right_powered = rotateImage(square_link_top_to_bottom_powered);
             /**************************************************************************************************/
 
             /***************************************
              * CURVED LINES
              ********************************************/
-            square_curve_link_top_to_right = canva.getSubimage(120, 120 * 2, 120, 120);
+            square_curve_link_top_to_right = canva.getSubimage(TileProps.TILE_SIZE, TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
             square_curve_link_right_to_bottom = rotateImage(square_curve_link_top_to_right);
             square_curve_link_bottom_to_left = rotateImage(square_curve_link_right_to_bottom);
             square_curve_link_left_to_top = rotateImage(square_curve_link_bottom_to_left);
 
-            square_curve_link_top_to_right_powered = canva.getSubimage(120, 120 * 5, 120, 120);
+            square_curve_link_top_to_right_powered = canva.getSubimage(TileProps.TILE_SIZE, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
             square_curve_link_right_to_bottom_powered = rotateImage(square_curve_link_top_to_right_powered);
             square_curve_link_bottom_to_left_powered = rotateImage(square_curve_link_right_to_bottom_powered);
             square_curve_link_left_to_top_powered = rotateImage(square_curve_link_bottom_to_left_powered);
@@ -115,11 +117,11 @@ public final class TextureManager {
             /*******************************************
              * OUTLINES
              *********************************************/
-            square_outline = canva.getSubimage(0, 0, 120, 120);
-            hexagonal_outline = canva.getSubimage(120 * 3, 0, 120, 120);
+            square_outline = canva.getSubimage(0, 0, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            hexagonal_outline = canva.getSubimage(TileProps.TILE_SIZE * 3, 0, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
 
-            square_outline_powered = canva.getSubimage(0, 120 * 3, 120, 120);
-            hexagonal_outline_powered = canva.getSubimage(120 * 3, 120 * 3, 120, 120);
+            square_outline_powered = canva.getSubimage(0, TileProps.TILE_SIZE * 3, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            hexagonal_outline_powered = canva.getSubimage(TileProps.TILE_SIZE * 3, TileProps.TILE_SIZE * 3, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
             /**************************************************************************************************/
 
         } catch (Exception e) {
