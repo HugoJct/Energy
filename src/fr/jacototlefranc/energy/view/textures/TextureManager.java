@@ -1,7 +1,5 @@
 package fr.jacototlefranc.energy.view.textures;
 
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -33,6 +31,10 @@ public final class TextureManager {
     private BufferedImage square_link_long_powered;
 
     private BufferedImage hexagonal_component_link;
+    private BufferedImage hexagonal_component_link_powered;
+
+    private BufferedImage hexagonal_link_long;
+    private BufferedImage hexagonal_link_long_powered;
 
     private BufferedImage hexagonal_curve_link_short;
     private BufferedImage hexagonal_curve_link_long;
@@ -77,6 +79,7 @@ public final class TextureManager {
                     TileProps.TILE_SIZE);
 
             hexagonal_component_link = square_component_link;
+            hexagonal_component_link_powered = square_component_link_powered;
             /**************************************************************************************************/
 
             /*****************************************
@@ -84,9 +87,13 @@ public final class TextureManager {
              ********************************************/
             square_link_long = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE,
                     TileProps.TILE_SIZE);
-
             square_link_long_powered = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE * 5,
                     TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+
+            hexagonal_link_long = canva.getSubimage(TileProps.TILE_SIZE * 6, TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE,
+            TileProps.TILE_SIZE);
+            hexagonal_link_long_powered = canva.getSubimage(TileProps.TILE_SIZE * 6, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE,
+            TileProps.TILE_SIZE);
             /**************************************************************************************************/
 
             /***************************************
@@ -97,10 +104,14 @@ public final class TextureManager {
             square_curve_link_powered = canva.getSubimage(TileProps.TILE_SIZE, TileProps.TILE_SIZE * 5,
                     TileProps.TILE_SIZE, TileProps.TILE_SIZE);
 
-            hexagonal_curve_link_short = canva.getSubimage(TileProps.TILE_SIZE * 4, TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
-            hexagonal_curve_link_long = canva.getSubimage(TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
-            hexagonal_curve_link_short_powered = canva.getSubimage(TileProps.TILE_SIZE * 4, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
-            hexagonal_curve_link_long_powered = canva.getSubimage(TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            hexagonal_curve_link_short = canva.getSubimage(TileProps.TILE_SIZE * 4, TileProps.TILE_SIZE * 2,
+                    TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            hexagonal_curve_link_long = canva.getSubimage(TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE * 2,
+                    TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            hexagonal_curve_link_short_powered = canva.getSubimage(TileProps.TILE_SIZE * 4, TileProps.TILE_SIZE * 5,
+                    TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            hexagonal_curve_link_long_powered = canva.getSubimage(TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE * 5,
+                    TileProps.TILE_SIZE, TileProps.TILE_SIZE);
             /**************************************************************************************************/
 
             /*******************************************
@@ -118,44 +129,6 @@ public final class TextureManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public static BufferedImage rotateImage(BufferedImage img) {
-        BufferedImage newImage = new BufferedImage(img.getHeight(), img.getWidth(), img.getType());
-
-        for (int i = 0; i < img.getWidth(); i++) {
-            for (int j = 0; j < img.getHeight(); j++) {
-                newImage.setRGB(img.getHeight() - 1 - j, i, img.getRGB(i, j));
-            }
-        }
-
-        return newImage;
-    }
-
-    public BufferedImage rotateImageByDegrees(BufferedImage img, double angle) {
-        double rads = Math.toRadians(angle);
-        double sin = Math.abs(Math.sin(rads)), cos = Math.abs(Math.cos(rads));
-        int w = img.getWidth();
-        int h = img.getHeight();
-        int newWidth = (int) Math.floor(w * cos + h * sin);
-        int newHeight = (int) Math.floor(h * cos + w * sin);
-
-        BufferedImage rotated = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = rotated.createGraphics();
-        AffineTransform at = new AffineTransform();
-        at.translate((newWidth - w) / 2, (newHeight - h) / 2);
-
-        int x = w / 2;
-        int y = h / 2;
-
-        at.rotate(rads, x, y);
-        g2d.setTransform(at);
-        g2d.drawImage(img, 0, 0, null);
-        // g2d.setColor(Color.RED);
-        g2d.drawRect(0, 0, newWidth - 1, newHeight - 1);
-        g2d.dispose();
-
-        return rotated;
     }
 
     public BufferedImage getTexture(TextureName name, boolean powered) {
@@ -185,6 +158,8 @@ public final class TextureManager {
                     return hexagonal_lightbulb;
                 case HEXAGONAL_COMPONENT_LINK:
                     return hexagonal_component_link;
+                case HEXAGONAL_LINK_LONG:
+                    return hexagonal_link_long;
                 case HEXAGONAL_CURVE_LINK_SHORT:
                     return hexagonal_curve_link_short;
                 case HEXAGONAL_CURVE_LINK_LONG:
@@ -215,7 +190,9 @@ public final class TextureManager {
                 case HEXAGONAL_LIGHTBULB:
                     return hexagonal_lightbulb;
                 case HEXAGONAL_COMPONENT_LINK:
-                    return hexagonal_component_link;
+                    return hexagonal_component_link_powered;
+                case HEXAGONAL_LINK_LONG:
+                    return hexagonal_link_long_powered;
                 case HEXAGONAL_CURVE_LINK_SHORT:
                     return hexagonal_curve_link_short_powered;
                 case HEXAGONAL_CURVE_LINK_LONG:

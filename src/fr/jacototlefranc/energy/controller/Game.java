@@ -14,15 +14,15 @@ public class Game {
     private MenuController menuController;
 
     public Game(String name) {
-        this.gameFile = new File("res/lvls/level6.nrg");
+        this.gameFile = new File("res/lvls/level8.nrg");
         this.gameLevel = LevelParser.parse(this.gameFile);
         this.gameView = new Frame(name, this.gameLevel);
 
         this.gameLevel.shuffle();
 
-        this.gameController = new PlayController(this.gameLevel);
+        // this.gameController = new PlayController(this.gameLevel);
 
-        this.gameView.getContentPane().addMouseListener(this.gameController);
+        //this.gameView.getContentPane().addMouseListener(this.gameController);
         this.menuController = new MenuController(this.gameView.getQuit());
     }
 }
