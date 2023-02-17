@@ -1,6 +1,6 @@
 package fr.jacototlefranc.energy.view;
 
-import java.awt.Color;
+import java.awt.AlphaComposite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -46,8 +46,9 @@ public class TileView extends BufferedImage implements Observer, Observable {
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform transform = new AffineTransform();
 
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+        g2d.setComposite(AlphaComposite.Clear); 
+        g2d.fillRect(0, 0, 120, 120); 
+        g2d.setComposite(AlphaComposite.SrcOver);
 
         if (t.getShape() == TileShape.SQUARE) {
 
@@ -171,6 +172,48 @@ public class TileView extends BufferedImage implements Observer, Observable {
                     transform.rotate(Math.toRadians(-60), 60, 52);
                     g2d.setTransform(transform);
                     g2d.drawImage(tm.getTexture(TextureName.HEXAGONAL_COMPONENT_LINK, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(60), 60, 52);
+                }
+            } else {
+                //Top to top right
+                if(t.getSides()[0].isConnected() && t.getSides()[1].isConnected()) {
+                    g2d.setTransform(transform);
+                    g2d.drawImage(tm.getTexture(TextureName.HEXAGONAL_CURVE_LINK_SHORT, powered), 0, 0, null);
+                }
+                //Top right to bottom right
+                if(t.getSides()[1].isConnected() && t.getSides()[2].isConnected()) {
+                    transform.rotate(Math.toRadians(60), 60, 52);
+                    g2d.setTransform(transform);
+                    g2d.drawImage(tm.getTexture(TextureName.HEXAGONAL_CURVE_LINK_SHORT, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(-60), 60, 52);
+                }
+                //Bottom left to bottom
+                if(t.getSides()[2].isConnected() && t.getSides()[3].isConnected()) {
+                    transform.rotate(Math.toRadians(120), 60, 52);
+                    g2d.setTransform(transform);
+                    g2d.drawImage(tm.getTexture(TextureName.HEXAGONAL_CURVE_LINK_SHORT, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(-120), 60, 52);
+
+                }
+                //Bottom to to bottom left
+                if(t.getSides()[3].isConnected() && t.getSides()[4].isConnected()) {
+                    transform.rotate(Math.toRadians(180), 60, 52);
+                    g2d.setTransform(transform);
+                    g2d.drawImage(tm.getTexture(TextureName.HEXAGONAL_CURVE_LINK_SHORT, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(-180), 60, 52);
+                }
+                //Bottom left to top left
+                if(t.getSides()[4].isConnected() && t.getSides()[5].isConnected()) {
+                    transform.rotate(Math.toRadians(-120), 60, 52);
+                    g2d.setTransform(transform);
+                    g2d.drawImage(tm.getTexture(TextureName.HEXAGONAL_CURVE_LINK_SHORT, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(120), 60, 52);
+                }
+                //TOp left to top
+                if(t.getSides()[5].isConnected() && t.getSides()[0].isConnected()) {
+                    transform.rotate(Math.toRadians(-60), 60, 52);
+                    g2d.setTransform(transform);
+                    g2d.drawImage(tm.getTexture(TextureName.HEXAGONAL_CURVE_LINK_SHORT, powered), 0, 0, null);
                     transform.rotate(Math.toRadians(60), 60, 52);
                 }
             }

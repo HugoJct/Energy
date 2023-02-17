@@ -34,6 +34,11 @@ public final class TextureManager {
 
     private BufferedImage hexagonal_component_link;
 
+    private BufferedImage hexagonal_curve_link_short;
+    private BufferedImage hexagonal_curve_link_long;
+    private BufferedImage hexagonal_curve_link_short_powered;
+    private BufferedImage hexagonal_curve_link_long_powered;
+
     // tile outline
     private BufferedImage square_outline;
     private BufferedImage hexagonal_outline;
@@ -45,22 +50,31 @@ public final class TextureManager {
             BufferedImage canva = ImageIO.read(new File("res/tex/tuiles.png"));
 
             square_outlet = canva.getSubimage(0, TileProps.TILE_SIZE * 4, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
-            hexagonal_outlet = canva.getSubimage(TileProps.TILE_SIZE * 3, TileProps.TILE_SIZE * 4, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            hexagonal_outlet = canva.getSubimage(TileProps.TILE_SIZE * 3, TileProps.TILE_SIZE * 4, TileProps.TILE_SIZE,
+                    TileProps.TILE_SIZE);
 
-            square_wifi = canva.getSubimage(TileProps.TILE_SIZE, TileProps.TILE_SIZE, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
-            square_wifi_powered = canva.getSubimage(TileProps.TILE_SIZE, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
-            hexagonal_wifi = canva.getSubimage(TileProps.TILE_SIZE * 4, TileProps.TILE_SIZE, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            square_wifi = canva.getSubimage(TileProps.TILE_SIZE, TileProps.TILE_SIZE, TileProps.TILE_SIZE,
+                    TileProps.TILE_SIZE);
+            square_wifi_powered = canva.getSubimage(TileProps.TILE_SIZE, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE,
+                    TileProps.TILE_SIZE);
+            hexagonal_wifi = canva.getSubimage(TileProps.TILE_SIZE * 4, TileProps.TILE_SIZE, TileProps.TILE_SIZE,
+                    TileProps.TILE_SIZE);
 
-            square_lightbulb = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
-            square_lightbulb_powered = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
-            hexagonal_lightbulb = canva.getSubimage(TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            square_lightbulb = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE, TileProps.TILE_SIZE,
+                    TileProps.TILE_SIZE);
+            square_lightbulb_powered = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE * 5,
+                    TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            hexagonal_lightbulb = canva.getSubimage(TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE,
+                    TileProps.TILE_SIZE);
 
             /***************************************
              * COMPONENT LINKS
              **********************************************/
-            square_component_link = canva.getSubimage(0, TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            square_component_link = canva.getSubimage(0, TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE,
+                    TileProps.TILE_SIZE);
 
-            square_component_link_powered = canva.getSubimage(0, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            square_component_link_powered = canva.getSubimage(0, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE,
+                    TileProps.TILE_SIZE);
 
             hexagonal_component_link = square_component_link;
             /**************************************************************************************************/
@@ -68,17 +82,25 @@ public final class TextureManager {
             /*****************************************
              * STRAIGHT LINES
              ********************************************/
-            square_link_long = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            square_link_long = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE,
+                    TileProps.TILE_SIZE);
 
-            square_link_long_powered = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            square_link_long_powered = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE * 5,
+                    TileProps.TILE_SIZE, TileProps.TILE_SIZE);
             /**************************************************************************************************/
 
             /***************************************
              * CURVED LINES
              ********************************************/
-            square_curve_link = canva.getSubimage(TileProps.TILE_SIZE, TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            square_curve_link = canva.getSubimage(TileProps.TILE_SIZE, TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE,
+                    TileProps.TILE_SIZE);
+            square_curve_link_powered = canva.getSubimage(TileProps.TILE_SIZE, TileProps.TILE_SIZE * 5,
+                    TileProps.TILE_SIZE, TileProps.TILE_SIZE);
 
-            square_curve_link_powered = canva.getSubimage(TileProps.TILE_SIZE, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            hexagonal_curve_link_short = canva.getSubimage(TileProps.TILE_SIZE * 4, TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            hexagonal_curve_link_long = canva.getSubimage(TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            hexagonal_curve_link_short_powered = canva.getSubimage(TileProps.TILE_SIZE * 4, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            hexagonal_curve_link_long_powered = canva.getSubimage(TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
             /**************************************************************************************************/
 
             /*******************************************
@@ -87,8 +109,10 @@ public final class TextureManager {
             square_outline = canva.getSubimage(0, 0, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
             hexagonal_outline = canva.getSubimage(TileProps.TILE_SIZE * 3, 0, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
 
-            square_outline_powered = canva.getSubimage(0, TileProps.TILE_SIZE * 3, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
-            hexagonal_outline_powered = canva.getSubimage(TileProps.TILE_SIZE * 3, TileProps.TILE_SIZE * 3, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+            square_outline_powered = canva.getSubimage(0, TileProps.TILE_SIZE * 3, TileProps.TILE_SIZE,
+                    TileProps.TILE_SIZE);
+            hexagonal_outline_powered = canva.getSubimage(TileProps.TILE_SIZE * 3, TileProps.TILE_SIZE * 3,
+                    TileProps.TILE_SIZE, TileProps.TILE_SIZE);
             /**************************************************************************************************/
 
         } catch (Exception e) {
@@ -161,6 +185,10 @@ public final class TextureManager {
                     return hexagonal_lightbulb;
                 case HEXAGONAL_COMPONENT_LINK:
                     return hexagonal_component_link;
+                case HEXAGONAL_CURVE_LINK_SHORT:
+                    return hexagonal_curve_link_short;
+                case HEXAGONAL_CURVE_LINK_LONG:
+                    return hexagonal_curve_link_long;
                 case HEXAGONAL_OUTLINE:
                     return hexagonal_outline;
                 case HEXAGONAL_OUTLINE_POWERED:
@@ -188,6 +216,10 @@ public final class TextureManager {
                     return hexagonal_lightbulb;
                 case HEXAGONAL_COMPONENT_LINK:
                     return hexagonal_component_link;
+                case HEXAGONAL_CURVE_LINK_SHORT:
+                    return hexagonal_curve_link_short_powered;
+                case HEXAGONAL_CURVE_LINK_LONG:
+                    return hexagonal_curve_link_long_powered;
                 case HEXAGONAL_OUTLINE:
                     return hexagonal_outline_powered;
                 default:
