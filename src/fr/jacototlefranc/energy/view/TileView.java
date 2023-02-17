@@ -2,6 +2,8 @@ package fr.jacototlefranc.energy.view;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +41,10 @@ public class TileView extends BufferedImage implements Observer, Observable {
     protected void paint() {
 
         Graphics g = this.getGraphics();
-        boolean powered = t.isPowered() || t.isPowered() || t.isPowered() || t.isPowered();
+        boolean powered = t.isPowered();
+
+        Graphics2D g2d = (Graphics2D) g;
+        AffineTransform transform = new AffineTransform();
 
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
@@ -51,16 +56,25 @@ public class TileView extends BufferedImage implements Observer, Observable {
             if (t.getContent() == Component.NONE) {
 
                 if (t.getSides()[0].isConnected() && t.getSides()[1].isConnected()) {
-                    g.drawImage(tm.getTexture(TextureName.SQUARE_CURVE_LINK_TOP_TO_RIGHT, powered), 0, 0, null);
+                    g2d.drawImage(tm.getTexture(TextureName.SQUARE_CURVE_LINK, powered), 0, 0, null);
                 }
                 if (t.getSides()[1].isConnected() && t.getSides()[2].isConnected()) {
-                    g.drawImage(tm.getTexture(TextureName.SQUARE_CURVE_LINK_RIGHT_TO_BOTTOM, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(90), 60, 60);
+                    g2d.setTransform(transform);
+                    g2d.drawImage(tm.getTexture(TextureName.SQUARE_CURVE_LINK, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(-90), 60, 60);
                 }
                 if (t.getSides()[2].isConnected() && t.getSides()[3].isConnected()) {
-                    g.drawImage(tm.getTexture(TextureName.SQUARE_CURVE_LINK_BOTTOM_TO_LEFT, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(180), 60, 60);
+                    g2d.setTransform(transform);
+                    g2d.drawImage(tm.getTexture(TextureName.SQUARE_CURVE_LINK, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(-180), 60, 60);
                 }
                 if (t.getSides()[3].isConnected() && t.getSides()[0].isConnected()) {
-                    g.drawImage(tm.getTexture(TextureName.SQUARE_CURVE_LINK_LEFT_TO_TOP, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(-90), 60, 60);
+                    g2d.setTransform(transform);
+                    g2d.drawImage(tm.getTexture(TextureName.SQUARE_CURVE_LINK, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(90), 60, 60);
                 }
 
                 if ((t.getSides()[0].isConnected() && t.getSides()[2].isConnected()) &&
@@ -71,7 +85,7 @@ public class TileView extends BufferedImage implements Observer, Observable {
                         !(t.getSides()[0].isConnected() &&
                                 t.getSides()[3].isConnected() &&
                                 t.getSides()[2].isConnected())) {
-                    g.drawImage(tm.getTexture(TextureName.SQUARE_LINK_TOP_TO_BOTTOM, powered), 0, 0, null);
+                    g2d.drawImage(tm.getTexture(TextureName.SQUARE_LINK_LONG, powered), 0, 0, null);
                 }
                 if (t.getSides()[1].isConnected() && t.getSides()[3].isConnected() &&
                         !(t.getSides()[1].isConnected() &&
@@ -81,21 +95,34 @@ public class TileView extends BufferedImage implements Observer, Observable {
                         !(t.getSides()[0].isConnected() &&
                                 t.getSides()[3].isConnected() &&
                                 t.getSides()[1].isConnected())) {
-                    g.drawImage(tm.getTexture(TextureName.SQUARE_LINK_LEFT_TO_RIGHT, powered), 0, 0, null);
+
+                    transform.rotate(Math.toRadians(90), 60, 60);
+                    g2d.setTransform(transform);
+                    g2d.drawImage(tm.getTexture(TextureName.SQUARE_LINK_LONG, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(-90), 60, 60);
                 }
 
             } else {
                 if (t.getSides()[0].isConnected()) {
-                    g.drawImage(tm.getTexture(TextureName.SQUARE_COMPONENT_LINK_TOP, powered), 0, 0, null);
+                    g.drawImage(tm.getTexture(TextureName.SQUARE_COMPONENT_LINK, powered), 0, 0, null);
                 }
                 if (t.getSides()[1].isConnected()) {
-                    g.drawImage(tm.getTexture(TextureName.SQUARE_COMPONENT_LINK_RIGHT, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(90), 60, 60);
+                    g2d.setTransform(transform);
+                    g2d.drawImage(tm.getTexture(TextureName.SQUARE_COMPONENT_LINK, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(-90), 60, 60);
                 }
                 if (t.getSides()[2].isConnected()) {
-                    g.drawImage(tm.getTexture(TextureName.SQUARE_COMPONENT_LINK_BOTTOM, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(180), 60, 60);
+                    g2d.setTransform(transform);
+                    g2d.drawImage(tm.getTexture(TextureName.SQUARE_COMPONENT_LINK, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(-180), 60, 60);
                 }
                 if (t.getSides()[3].isConnected()) {
-                    g.drawImage(tm.getTexture(TextureName.SQUARE_COMPONENT_LINK_LEFT, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(-90), 60, 60);
+                    g2d.setTransform(transform);
+                    g2d.drawImage(tm.getTexture(TextureName.SQUARE_COMPONENT_LINK, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(90), 60, 60);
                 }
 
                 if (t.getContent() == Component.OUTLET) {
@@ -111,15 +138,44 @@ public class TileView extends BufferedImage implements Observer, Observable {
 
             g.drawImage(tm.getTexture(TextureName.HEXAGONAL_OUTLINE, powered), 0, 0, null);
 
-            if (t.getSides()[0].isConnected()) {
-                g.drawImage(tm.getTexture(TextureName.HEXAGONAL_COMPONENT_LINK_TOP, powered), 0, 0, null);
+            if (t.getContent() != Component.NONE) {
+
+                if (t.getSides()[0].isConnected()) {
+                    g.drawImage(tm.getTexture(TextureName.HEXAGONAL_COMPONENT_LINK, powered), 0, 0, null);
+                }
+                if (t.getSides()[1].isConnected()) {
+                    transform.rotate(Math.toRadians(60), 60, 52);
+                    g2d.setTransform(transform);
+                    g2d.drawImage(tm.getTexture(TextureName.HEXAGONAL_COMPONENT_LINK, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(-60), 60, 52);
+                }
+                if (t.getSides()[2].isConnected()) {
+                    transform.rotate(Math.toRadians(120), 60, 52);
+                    g2d.setTransform(transform);
+                    g2d.drawImage(tm.getTexture(TextureName.HEXAGONAL_COMPONENT_LINK, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(-120), 60, 52);
+                }
+                if (t.getSides()[3].isConnected()) {
+                    transform.rotate(Math.toRadians(180), 60, 52);
+                    g2d.setTransform(transform);
+                    g2d.drawImage(tm.getTexture(TextureName.HEXAGONAL_COMPONENT_LINK, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(-180), 60, 52);
+                }
+                if (t.getSides()[4].isConnected()) {
+                    transform.rotate(Math.toRadians(-120), 60, 52);
+                    g2d.setTransform(transform);
+                    g2d.drawImage(tm.getTexture(TextureName.HEXAGONAL_COMPONENT_LINK, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(120), 60, 52);
+                }
+                if (t.getSides()[5].isConnected()) {
+                    transform.rotate(Math.toRadians(-60), 60, 52);
+                    g2d.setTransform(transform);
+                    g2d.drawImage(tm.getTexture(TextureName.HEXAGONAL_COMPONENT_LINK, powered), 0, 0, null);
+                    transform.rotate(Math.toRadians(60), 60, 52);
+                }
             }
-            if(t.getSides()[1].isConnected()) {
-                g.drawImage(tm.getTexture(TextureName.HEXAGONAL_COMPONENT_LINK_TOP_RIGHT, powered), 0, 0, null);
-            }
-            if (t.getSides()[3].isConnected()) {
-                g.drawImage(tm.getTexture(TextureName.SQUARE_COMPONENT_LINK_BOTTOM, powered), 0, 0, null);
-            }
+
+            g2d.setTransform(transform);
 
             if (t.getContent() == Component.OUTLET) {
                 g.drawImage(tm.getTexture(TextureName.HEXAGONAL_OUTLET, powered), 0, 0, null);
@@ -144,7 +200,7 @@ public class TileView extends BufferedImage implements Observer, Observable {
 
     @Override
     public void notifyObserver() {
-        for(Observer o : observers) {
+        for (Observer o : observers) {
             o.update();
         }
     }

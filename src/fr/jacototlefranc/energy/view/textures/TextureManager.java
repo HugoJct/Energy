@@ -23,34 +23,16 @@ public final class TextureManager {
     private BufferedImage hexagonal_lightbulb;
 
     // link from component to tile edge
-    private BufferedImage square_component_link_top;
-    private BufferedImage square_component_link_bottom;
-    private BufferedImage square_component_link_left;
-    private BufferedImage square_component_link_right;
+    private BufferedImage square_component_link;
+    private BufferedImage square_component_link_powered;
 
-    private BufferedImage square_component_link_top_powered;
-    private BufferedImage square_component_link_bottom_powered;
-    private BufferedImage square_component_link_left_powered;
-    private BufferedImage square_component_link_right_powered;
+    private BufferedImage square_curve_link;
+    private BufferedImage square_curve_link_powered;
 
-    private BufferedImage square_curve_link_top_to_right;
-    private BufferedImage square_curve_link_right_to_bottom;
-    private BufferedImage square_curve_link_bottom_to_left;
-    private BufferedImage square_curve_link_left_to_top;
+    private BufferedImage square_link_long;
+    private BufferedImage square_link_long_powered;
 
-    private BufferedImage square_curve_link_top_to_right_powered;
-    private BufferedImage square_curve_link_right_to_bottom_powered;
-    private BufferedImage square_curve_link_bottom_to_left_powered;
-    private BufferedImage square_curve_link_left_to_top_powered;
-
-    private BufferedImage square_link_top_to_bottom;
-    private BufferedImage square_link_left_to_right;
-
-    private BufferedImage square_link_top_to_bottom_powered;
-    private BufferedImage square_link_left_to_right_powered;
-
-    private BufferedImage hexagonal_component_link_top;
-    private BufferedImage hexagonal_component_link_top_right;
+    private BufferedImage hexagonal_component_link;
 
     // tile outline
     private BufferedImage square_outline;
@@ -76,42 +58,27 @@ public final class TextureManager {
             /***************************************
              * COMPONENT LINKS
              **********************************************/
-            square_component_link_top = canva.getSubimage(0, TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
-            square_component_link_right = rotateImage(square_component_link_top);
-            square_component_link_bottom = rotateImage(square_component_link_right);
-            square_component_link_left = rotateImage(square_component_link_bottom);
+            square_component_link = canva.getSubimage(0, TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
 
-            square_component_link_top_powered = canva.getSubimage(0, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
-            square_component_link_right_powered = rotateImage(square_component_link_top_powered);
-            square_component_link_bottom_powered = rotateImage(square_component_link_right_powered);
-            square_component_link_left_powered = rotateImage(square_component_link_bottom_powered);
+            square_component_link_powered = canva.getSubimage(0, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
 
-            hexagonal_component_link_top = square_component_link_top;
-            hexagonal_component_link_top_right = rotateImageByDegrees(hexagonal_component_link_top, 60);
+            hexagonal_component_link = square_component_link;
             /**************************************************************************************************/
 
             /*****************************************
              * STRAIGHT LINES
              ********************************************/
-            square_link_top_to_bottom = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
-            square_link_left_to_right = rotateImage(square_link_top_to_bottom);
+            square_link_long = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
 
-            square_link_top_to_bottom_powered = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
-            square_link_left_to_right_powered = rotateImage(square_link_top_to_bottom_powered);
+            square_link_long_powered = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
             /**************************************************************************************************/
 
             /***************************************
              * CURVED LINES
              ********************************************/
-            square_curve_link_top_to_right = canva.getSubimage(TileProps.TILE_SIZE, TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
-            square_curve_link_right_to_bottom = rotateImage(square_curve_link_top_to_right);
-            square_curve_link_bottom_to_left = rotateImage(square_curve_link_right_to_bottom);
-            square_curve_link_left_to_top = rotateImage(square_curve_link_bottom_to_left);
+            square_curve_link = canva.getSubimage(TileProps.TILE_SIZE, TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
 
-            square_curve_link_top_to_right_powered = canva.getSubimage(TileProps.TILE_SIZE, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
-            square_curve_link_right_to_bottom_powered = rotateImage(square_curve_link_top_to_right_powered);
-            square_curve_link_bottom_to_left_powered = rotateImage(square_curve_link_right_to_bottom_powered);
-            square_curve_link_left_to_top_powered = rotateImage(square_curve_link_bottom_to_left_powered);
+            square_curve_link_powered = canva.getSubimage(TileProps.TILE_SIZE, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
             /**************************************************************************************************/
 
             /*******************************************
@@ -180,46 +147,20 @@ public final class TextureManager {
                     return square_wifi;
                 case SQUARE_LIGHTBULB:
                     return square_lightbulb;
-                case SQUARE_COMPONENT_LINK_TOP:
-                    return square_component_link_top;
-                case SQUARE_COMPONENT_LINK_BOTTOM:
-                    return square_component_link_bottom;
-                case SQUARE_COMPONENT_LINK_LEFT:
-                    return square_component_link_left;
-                case SQUARE_COMPONENT_LINK_RIGHT:
-                    return square_component_link_right;
-                case SQUARE_LINK_TOP_TO_BOTTOM:
-                    return square_link_top_to_bottom;
-                case SQUARE_LINK_LEFT_TO_RIGHT:
-                    return square_link_left_to_right;
-                case SQUARE_CURVE_LINK_TOP_TO_RIGHT:
-                    return square_curve_link_top_to_right;
-                case SQUARE_CURVE_LINK_RIGHT_TO_BOTTOM:
-                    return square_curve_link_right_to_bottom;
-                case SQUARE_CURVE_LINK_BOTTOM_TO_LEFT:
-                    return square_curve_link_bottom_to_left;
-                case SQUARE_CURVE_LINK_LEFT_TO_TOP:
-                    return square_curve_link_left_to_top;
+                case SQUARE_COMPONENT_LINK:
+                    return square_component_link;
+                case SQUARE_LINK_LONG:
+                    return square_link_long;
+                case SQUARE_CURVE_LINK:
+                    return square_curve_link;
                 case SQUARE_OUTLINE:
                     return square_outline;
-                case SQUARE_OUTLINE_POWERED:
-                    return square_outline_powered;
                 case HEXAGONAL_WIFI:
                     return hexagonal_wifi;
                 case HEXAGONAL_LIGHTBULB:
                     return hexagonal_lightbulb;
-                case HEXAGONAL_COMPONENT_LINK_TOP:
-                    return hexagonal_component_link_top;
-                case HEXAGONAL_COMPONENT_LINK_TOP_RIGHT:
-                    return hexagonal_component_link_top_right;
-                case HEXAGONAL_COMPONENT_LINK_BOTTOM_RIGHT:
-                    // TODO
-                case HEXAGONAL_COMPONENT_LINK_BOTTOM:
-                    // TODO
-                case HEXAGONAL_COMPONENT_LINK_BOTTOM_LEFT:
-                    // TODO
-                case HEXAGONAL_COMPONENT_LINK_TOP_LEFT:
-                    // TODO
+                case HEXAGONAL_COMPONENT_LINK:
+                    return hexagonal_component_link;
                 case HEXAGONAL_OUTLINE:
                     return hexagonal_outline;
                 case HEXAGONAL_OUTLINE_POWERED:
@@ -233,44 +174,20 @@ public final class TextureManager {
                     return square_wifi_powered;
                 case SQUARE_LIGHTBULB:
                     return square_lightbulb_powered;
-                case SQUARE_COMPONENT_LINK_TOP:
-                    return square_component_link_top_powered;
-                case SQUARE_COMPONENT_LINK_BOTTOM:
-                    return square_component_link_bottom_powered;
-                case SQUARE_COMPONENT_LINK_LEFT:
-                    return square_component_link_left_powered;
-                case SQUARE_COMPONENT_LINK_RIGHT:
-                    return square_component_link_right_powered;
-                case SQUARE_LINK_TOP_TO_BOTTOM:
-                    return square_link_top_to_bottom_powered;
-                case SQUARE_LINK_LEFT_TO_RIGHT:
-                    return square_link_left_to_right_powered;
-                case SQUARE_CURVE_LINK_TOP_TO_RIGHT:
-                    return square_curve_link_top_to_right_powered;
-                case SQUARE_CURVE_LINK_RIGHT_TO_BOTTOM:
-                    return square_curve_link_right_to_bottom_powered;
-                case SQUARE_CURVE_LINK_BOTTOM_TO_LEFT:
-                    return square_curve_link_bottom_to_left_powered;
-                case SQUARE_CURVE_LINK_LEFT_TO_TOP:
-                    return square_curve_link_left_to_top_powered;
+                case SQUARE_COMPONENT_LINK:
+                    return square_component_link_powered;
+                case SQUARE_LINK_LONG:
+                    return square_link_long_powered;
+                case SQUARE_CURVE_LINK:
+                    return square_curve_link_powered;
                 case SQUARE_OUTLINE:
                     return square_outline_powered;
                 case HEXAGONAL_WIFI:
                     return hexagonal_wifi;
                 case HEXAGONAL_LIGHTBULB:
                     return hexagonal_lightbulb;
-                case HEXAGONAL_COMPONENT_LINK_TOP:
-                    return hexagonal_component_link_top;
-                case HEXAGONAL_COMPONENT_LINK_TOP_RIGHT:
-                    return hexagonal_component_link_top_right;  
-                case HEXAGONAL_COMPONENT_LINK_BOTTOM_RIGHT:
-                    // TODO
-                case HEXAGONAL_COMPONENT_LINK_BOTTOM:
-                    // TODO
-                case HEXAGONAL_COMPONENT_LINK_BOTTOM_LEFT:
-                    // TODO
-                case HEXAGONAL_COMPONENT_LINK_TOP_LEFT:
-                    // TODO
+                case HEXAGONAL_COMPONENT_LINK:
+                    return hexagonal_component_link;
                 case HEXAGONAL_OUTLINE:
                     return hexagonal_outline_powered;
                 default:
