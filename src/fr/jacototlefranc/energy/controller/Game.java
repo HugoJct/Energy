@@ -20,9 +20,9 @@ public class Game {
 
         // this.gameLevel.shuffle();
 
-        // this.gameController = new PlayController(this.gameLevel);
+        this.gameController = new PlayController(this.gameLevel);
 
-        //this.gameView.getContentPane().addMouseListener(this.gameController);
+        this.gameView.getContentPane().addMouseListener(this.gameController);
         this.menuController = new MenuController(this.gameView.getQuit());
     }
 }

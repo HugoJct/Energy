@@ -25,6 +25,7 @@ public class BoardView extends JPanel implements Observer {
         this.level = lvl;
         this.setBackground(Color.BLACK);
         this.setLayout(null);
+        lvl.addObserver(this);
 
         if (level.getTilesShape() == TileShape.SQUARE) {
             this.setPreferredSize(
@@ -32,13 +33,6 @@ public class BoardView extends JPanel implements Observer {
         } else {
             this.setPreferredSize(new Dimension(level.getSizeY() * TileProps.TILE_SIZE - (level.getSizeY() / 2 * 55),
                     level.getSizeX() * 104 + 52 + 10));
-        }
-
-        for (Tile t : lvl.getTiles()) {
-            TileView tv = new TileView(t);
-            tv.addObserver(this);
-            new PlayController(tv);
-            tvs.add(tv);
         }
     }
 
