@@ -14,8 +14,9 @@ import fr.jacototlefranc.energy.model.tile.Tile;
 import fr.jacototlefranc.energy.model.tile.info.TileProps;
 import fr.jacototlefranc.energy.model.tile.info.TileShape;
 import fr.jacototlefranc.energy.observer.Observer;
+import fr.jacototlefranc.energy.view.textures.TileDrawer;
 
-public class BoardView extends JPanel implements Observer{
+public class BoardView extends JPanel implements Observer {
 
     private Level level;
     private List<TileView> tvs = new ArrayList<>();
@@ -26,12 +27,14 @@ public class BoardView extends JPanel implements Observer{
         this.setLayout(null);
 
         if (level.getTilesShape() == TileShape.SQUARE) {
-            this.setPreferredSize(new Dimension(level.getSizeY() * TileProps.TILE_SIZE, level.getSizeX() * TileProps.TILE_SIZE + 10));
+            this.setPreferredSize(
+                    new Dimension(level.getSizeY() * TileProps.TILE_SIZE, level.getSizeX() * TileProps.TILE_SIZE + 10));
         } else {
-            this.setPreferredSize(new Dimension(level.getSizeY() * TileProps.TILE_SIZE - (level.getSizeY() / 2 * 55), level.getSizeX() * 104 + 52 + 10));
+            this.setPreferredSize(new Dimension(level.getSizeY() * TileProps.TILE_SIZE - (level.getSizeY() / 2 * 55),
+                    level.getSizeX() * 104 + 52 + 10));
         }
 
-        for(Tile t : lvl.getTiles()) {
+        for (Tile t : lvl.getTiles()) {
             TileView tv = new TileView(t);
             tv.addObserver(this);
             new PlayController(tv);
@@ -45,21 +48,18 @@ public class BoardView extends JPanel implements Observer{
 
         for (int i = 0; i < level.getTiles().size(); i++) {
 
-            TileView tv = tvs.get(i);
-
             int x = i % level.getSizeY();
             int y = i / level.getSizeY();
+            Tile t = level.getTiles().get(i);
 
-            this.add(tv);
-
-            if (tv.getTile().getShape() == TileShape.HEXAGON) {
+            if (t.getShape() == TileShape.HEXAGON) {
                 if (x % 2 == 1) {
-                    tv.setBounds(x * 91, y * 104 + 52, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+                    TileDrawer.drawTile(t, g, x * 91, y * 104 + 52);
                 } else {
-                    tv.setBounds(x * 91, y * 104, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+                    TileDrawer.drawTile(t, g, x * 91, y * 104);
                 }
             } else {
-                tv.setBounds(x * TileProps.TILE_SIZE, y * TileProps.TILE_SIZE, TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+                TileDrawer.drawTile(t, g, x * 120, y * 120);
             }
         }
     }

@@ -18,7 +18,7 @@ public class Game {
         this.gameLevel = LevelParser.parse(this.gameFile);
         this.gameView = new Frame(name, this.gameLevel);
 
-        this.gameLevel.shuffle();
+        // this.gameLevel.shuffle();
 
         // this.gameController = new PlayController(this.gameLevel);
 
