@@ -1,10 +1,12 @@
 package fr.jacototlefranc.energy.controller;
 
+import java.awt.Polygon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import fr.jacototlefranc.energy.model.Level;
 import fr.jacototlefranc.energy.model.tile.Tile;
+import fr.jacototlefranc.energy.model.tile.info.TileShape;
 
 public class PlayController extends MouseAdapter {
 
@@ -16,7 +18,67 @@ public class PlayController extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        Tile t = lvl.getTiles().get(5);
-        t.rotate();
+
+        int xmax = lvl.getSizeX();
+        int ymax = lvl.getSizeY();
+
+        int tileCount = xmax * ymax - 1;
+
+        if(lvl.getTilesShape() == TileShape.HEXAGON) {
+            Polygon ph = new Polygon();
+            ph.addPoint(30, 0);
+            ph.addPoint(90, 0);
+            ph.addPoint(120, 52);
+            ph.addPoint(90, 104);
+            ph.addPoint(30, 104);
+            ph.addPoint(0, 52);
+
+            for (int i = 0; i < tileCount; i++) {
+
+                if (i > 0) {
+                    if (i % ymax == 0) {
+                        ph.translate((-91) * (ymax-1), 104);
+                    } else {
+                        if(i % 2 == 0) {
+                            ph.translate(91, -52);
+                        } else {
+                            ph.translate(91, 52);
+                        }
+                    }
+                }
+    
+                if (ph.contains(e.getPoint())) {
+                    Tile t = lvl.getTiles().get(i);
+                    System.out.println("found:" + i);
+                    t.rotate();
+                    return;
+                }
+            }
+            return;
+        }
+
+
+        Polygon p = new Polygon();
+        p.addPoint(0, 0);
+        p.addPoint(120, 0);
+        p.addPoint(120, 120);
+        p.addPoint(0, 120);
+
+        for (int i = 0; i < tileCount; i++) {
+
+            if (i > 0) {
+                if (i % ymax == 0) {
+                    p.translate((-120) * (ymax-1), 120);
+                } else
+                    p.translate(120, 0);
+            }
+
+            if (p.contains(e.getPoint())) {
+                Tile t = lvl.getTiles().get(i);
+                System.out.println("found:" + i);
+                t.rotate();
+                return;
+            }
+        }
     }
 }

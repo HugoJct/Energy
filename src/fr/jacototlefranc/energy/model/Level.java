@@ -10,7 +10,7 @@ import fr.jacototlefranc.energy.model.tile.info.TileShape;
 import fr.jacototlefranc.energy.observer.Observable;
 import fr.jacototlefranc.energy.observer.Observer;
 
-public class Level implements Observer, Observable{
+public class Level implements Observer, Observable {
     
     private int sizeX;
     private int sizeY;
