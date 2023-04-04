@@ -18,6 +18,5 @@ public class PlayController extends MouseAdapter {
     public void mouseClicked(MouseEvent e) {
         Tile t = lvl.getTiles().get(5);
         t.rotate();
-        System.out.println("oui");
     }
 }
