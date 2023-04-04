@@ -91,7 +91,7 @@ public class BoardView extends JPanel implements Observer {
 
                     for (int i = 0; i < 4; i++) {
                         if (t.getSides()[i].isConnected()) {
-                            g2d.rotate(Math.toRadians(90 * i), 60, 60);
+                            g2d.rotate(Math.toRadians(90 * i), x + 60, y + 60);
                             g2d.drawImage(tm.getTexture(TextureName.SQUARE_COMPONENT_LINK, powered), x, y, null);
                             g2d.setTransform(old);
                         }
