@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 
 import fr.jacototlefranc.energy.model.Level;
 import fr.jacototlefranc.energy.model.tile.Tile;
+import fr.jacototlefranc.energy.model.tile.info.Component;
 import fr.jacototlefranc.energy.model.tile.info.TileShape;
 
 public class PlayController extends MouseAdapter {
@@ -24,7 +25,7 @@ public class PlayController extends MouseAdapter {
 
         int tileCount = xmax * ymax - 1;
 
-        if(lvl.getTilesShape() == TileShape.HEXAGON) {
+        if (lvl.getTilesShape() == TileShape.HEXAGON) {
             Polygon ph = new Polygon();
             ph.addPoint(30, 0);
             ph.addPoint(90, 0);
@@ -33,30 +34,45 @@ public class PlayController extends MouseAdapter {
             ph.addPoint(30, 104);
             ph.addPoint(0, 52);
 
+            boolean driftedDown = false;
+
             for (int i = 0; i < tileCount; i++) {
 
-                if (i > 0) {
-                    if (i % ymax == 0) {
-                        ph.translate((-91) * (ymax-1), 104);
-                    } else {
-                        if(i % 2 == 0) {
+                if(i > 0) {
+
+                    if(i % ymax == 0) {
+                        if(driftedDown) {
+                            ph.translate((-91) * (ymax-1), 52);
+                            driftedDown = false;
+                        } else {
+                            ph.translate((-91) * (ymax-1), 104);
+                        }
+                    } else if((i % ymax) % 2 == 0) {
+                        if(driftedDown) {
                             ph.translate(91, -52);
+                            driftedDown = false;
+                        } else {
+                            ph.translate(91, 0);
+                        }
+                    } else if((i % ymax) % 2 == 1) {
+                        if(driftedDown) {
+                            ph.translate(91, 0);
                         } else {
                             ph.translate(91, 52);
+                            driftedDown = true;
                         }
                     }
                 }
-    
+
                 if (ph.contains(e.getPoint())) {
                     Tile t = lvl.getTiles().get(i);
-                    System.out.println("found:" + i);
-                    t.rotate();
+                    if(t.getContent() != Component.OUTLET)
+                        t.rotate();
                     return;
                 }
             }
             return;
         }
-
 
         Polygon p = new Polygon();
         p.addPoint(0, 0);
@@ -68,15 +84,15 @@ public class PlayController extends MouseAdapter {
 
             if (i > 0) {
                 if (i % ymax == 0) {
-                    p.translate((-120) * (ymax-1), 120);
+                    p.translate((-120) * (ymax - 1), 120);
                 } else
                     p.translate(120, 0);
             }
 
             if (p.contains(e.getPoint())) {
                 Tile t = lvl.getTiles().get(i);
-                System.out.println("found:" + i);
-                t.rotate();
+                if(t.getContent() != Component.OUTLET)
+                    t.rotate();
                 return;
             }
         }
