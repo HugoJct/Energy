@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import fr.jacototlefranc.energy.model.tile.Tile;
-import fr.jacototlefranc.energy.model.tile.info.Component;
+import fr.jacototlefranc.energy.model.tile.info.TileComponent;
 import fr.jacototlefranc.energy.model.tile.info.TileShape;
 
 public class LevelParser {
@@ -39,26 +39,26 @@ public class LevelParser {
 
                     if (t != null)
                     lvl.addTile(t);
-                    t = new Tile.TileBuilder().setShape(shape).setContent(Component.NONE).build();
+                    t = new Tile.TileBuilder().setShape(shape).setContent(TileComponent.NONE).build();
 
                 } else if (content == 'W') {
 
                     if (t != null)
                     lvl.addTile(t);
-                    t = new Tile.TileBuilder().setShape(shape).setContent(Component.WIFI).build();
+                    t = new Tile.TileBuilder().setShape(shape).setContent(TileComponent.WIFI).build();
 
                 } else if (content == 'S') {
 
                     if (t != null)
                     lvl.addTile(t);
-                    t = new Tile.TileBuilder().setShape(shape).setContent(Component.OUTLET).build();
+                    t = new Tile.TileBuilder().setShape(shape).setContent(TileComponent.OUTLET).build();
 
                 } else if (content == 'L') {
 
                     if (t != null) {
                         lvl.addTile(t);
                     }
-                    t = new Tile.TileBuilder().setShape(shape).setContent(Component.LIGHTBULB).build();
+                    t = new Tile.TileBuilder().setShape(shape).setContent(TileComponent.LIGHTBULB).build();
 
                 } else {
                     t.getSides()[content - 48].setConnected(true);

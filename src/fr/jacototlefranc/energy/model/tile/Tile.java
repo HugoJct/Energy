@@ -3,7 +3,7 @@ package fr.jacototlefranc.energy.model.tile;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.jacototlefranc.energy.model.tile.info.Component;
+import fr.jacototlefranc.energy.model.tile.info.TileComponent;
 import fr.jacototlefranc.energy.model.tile.info.TileEdge;
 import fr.jacototlefranc.energy.model.tile.info.TileShape;
 import fr.jacototlefranc.energy.observer.Observable;
@@ -14,7 +14,7 @@ public class Tile implements Observable{
     private List<Observer> observers = new ArrayList<>();
 
     private TileShape shape;
-    private Component content;
+    private TileComponent content;
     private TileEdge[] sides;
     private boolean powered;
 
@@ -36,7 +36,7 @@ public class Tile implements Observable{
             sides[i] = new TileEdge(false);
         }
         
-        if(this.content == Component.OUTLET) {
+        if(this.content == TileComponent.OUTLET) {
             powered = true;
         }
     }
@@ -77,7 +77,7 @@ public class Tile implements Observable{
         return this.shape;
     }
 
-    public Component getContent() {
+    public TileComponent getContent() {
         return this.content;
     }
 
@@ -89,18 +89,18 @@ public class Tile implements Observable{
         this.powered = newState;
     }
 
-    public void setContent(Component newContent) {
+    public void setContent(TileComponent newContent) {
         this.content = newContent;
     }
 
     public static class TileBuilder {
 
         private TileShape shape;
-        private Component content;
+        private TileComponent content;
 
         public TileBuilder() {
             this.shape = TileShape.SQUARE;
-            this.content = Component.LIGHTBULB;
+            this.content = TileComponent.LIGHTBULB;
         }
 
         public TileBuilder setShape(TileShape shape) {
@@ -108,7 +108,7 @@ public class Tile implements Observable{
             return this;
         }
 
-        public TileBuilder setContent(Component component) {
+        public TileBuilder setContent(TileComponent component) {
             this.content = component;
             return this;
         }

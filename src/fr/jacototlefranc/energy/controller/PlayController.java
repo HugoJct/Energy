@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 
 import fr.jacototlefranc.energy.model.Level;
 import fr.jacototlefranc.energy.model.tile.Tile;
-import fr.jacototlefranc.energy.model.tile.info.Component;
+import fr.jacototlefranc.energy.model.tile.info.TileComponent;
 import fr.jacototlefranc.energy.model.tile.info.TileShape;
 
 public class PlayController extends MouseAdapter {
@@ -66,7 +66,7 @@ public class PlayController extends MouseAdapter {
 
                 if (ph.contains(e.getPoint())) {
                     Tile t = lvl.getTiles().get(i);
-                    if(t.getContent() != Component.OUTLET)
+                    if(t.getContent() != TileComponent.OUTLET)
                         t.rotate();
                     return;
                 }
@@ -91,7 +91,7 @@ public class PlayController extends MouseAdapter {
 
             if (p.contains(e.getPoint())) {
                 Tile t = lvl.getTiles().get(i);
-                if(t.getContent() != Component.OUTLET)
+                if(t.getContent() != TileComponent.OUTLET)
                     t.rotate();
                 return;
             }

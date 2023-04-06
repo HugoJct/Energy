@@ -1,4 +1,4 @@
-package fr.jacototlefranc.energy.view;
+package fr.jacototlefranc.energy.view.ingame;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 import fr.jacototlefranc.energy.model.Level;
 import fr.jacototlefranc.energy.model.tile.Tile;
-import fr.jacototlefranc.energy.model.tile.info.Component;
+import fr.jacototlefranc.energy.model.tile.info.TileComponent;
 import fr.jacototlefranc.energy.model.tile.info.TileProps;
 import fr.jacototlefranc.energy.model.tile.info.TileShape;
 import fr.jacototlefranc.energy.observer.Observer;
@@ -70,7 +70,7 @@ public class BoardView extends JPanel implements Observer {
 
                 g2d.drawImage(tm.getTexture(TextureName.SQUARE_OUTLINE, powered), x, y, null);
 
-                if (t.getContent() == Component.NONE) {
+                if (t.getContent() == TileComponent.NONE) {
 
                     for (int i = 0; i < 4; i++) {
                         if (t.getSides()[i].isConnected() && t.getSides()[(i + 1) % 4].isConnected()) {
@@ -97,11 +97,11 @@ public class BoardView extends JPanel implements Observer {
                         }
                     }
 
-                    if (t.getContent() == Component.OUTLET) {
+                    if (t.getContent() == TileComponent.OUTLET) {
                         g.drawImage(tm.getTexture(TextureName.SQUARE_OUTLET, powered), x, y, null);
-                    } else if (t.getContent() == Component.WIFI) {
+                    } else if (t.getContent() == TileComponent.WIFI) {
                         g.drawImage(tm.getTexture(TextureName.SQUARE_WIFI, powered), x, y, null);
-                    } else if (t.getContent() == Component.LIGHTBULB) {
+                    } else if (t.getContent() == TileComponent.LIGHTBULB) {
                         g.drawImage(tm.getTexture(TextureName.SQUARE_LIGHTBULB, powered), x, y, null);
                     }
                 }
@@ -110,7 +110,7 @@ public class BoardView extends JPanel implements Observer {
 
                 g.drawImage(tm.getTexture(TextureName.HEXAGONAL_OUTLINE, powered), x, y, null);
 
-                if (t.getContent() != Component.NONE) {
+                if (t.getContent() != TileComponent.NONE) {
 
                     for (int i = 0; i < 6; i++) {
                         if (t.getSides()[i].isConnected()) {
@@ -143,11 +143,11 @@ public class BoardView extends JPanel implements Observer {
                     }
                 }
 
-                if (t.getContent() == Component.OUTLET) {
+                if (t.getContent() == TileComponent.OUTLET) {
                     g.drawImage(tm.getTexture(TextureName.HEXAGONAL_OUTLET, powered), x, y, null);
-                } else if (t.getContent() == Component.WIFI) {
+                } else if (t.getContent() == TileComponent.WIFI) {
                     g.drawImage(tm.getTexture(TextureName.HEXAGONAL_WIFI, powered), x, y, null);
-                } else if (t.getContent() == Component.LIGHTBULB) {
+                } else if (t.getContent() == TileComponent.LIGHTBULB) {
                     g.drawImage(tm.getTexture(TextureName.HEXAGONAL_LIGHTBULB, powered), x, y, null);
                 }
             }
