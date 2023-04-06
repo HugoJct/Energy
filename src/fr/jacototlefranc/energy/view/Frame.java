@@ -10,6 +10,7 @@ public class Frame extends JFrame {
     private JMenuBar menubar;
     private JMenu files;
     private JMenuItem quit;
+    private JMenuItem menu;
 
     public Frame(String title) {
         super(title);
@@ -17,8 +18,10 @@ public class Frame extends JFrame {
         this.menubar = new JMenuBar();
         this.files = new JMenu("Fichier");
         this.quit = new JMenuItem("Quitter");
+        this.menu = new JMenuItem("Menu");
 
         this.files.add(quit);
+        this.files.add(menu);
         this.menubar.add(files);
 
         this.setJMenuBar(menubar);
@@ -35,6 +38,9 @@ public class Frame extends JFrame {
 
     public JMenuItem getQuit() {
         return quit;
+    }
+    public JMenuItem getMenu() {
+        return menu;
     }
 
     public void setPanel(JPanel p) {
