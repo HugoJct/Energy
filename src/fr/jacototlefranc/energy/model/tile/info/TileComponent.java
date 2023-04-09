@@ -1,6 +1,6 @@
 package fr.jacototlefranc.energy.model.tile.info;
 
-public enum Component {
+public enum TileComponent {
     LIGHTBULB,
     OUTLET,
     WIFI,

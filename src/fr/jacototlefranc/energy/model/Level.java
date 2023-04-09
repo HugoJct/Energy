@@ -5,16 +5,19 @@ import java.util.List;
 import java.util.Random;
 
 import fr.jacototlefranc.energy.model.tile.Tile;
-import fr.jacototlefranc.energy.model.tile.info.Component;
+import fr.jacototlefranc.energy.model.tile.info.TileComponent;
 import fr.jacototlefranc.energy.model.tile.info.TileShape;
+import fr.jacototlefranc.energy.observer.Observable;
+import fr.jacototlefranc.energy.observer.Observer;
 
-public class Level {
+public class Level implements Observer, Observable {
     
     private int sizeX;
     private int sizeY;
     private int[][] adjacencyMatrix;
     private List<Tile> tiles;
     private TileShape tileShape;
+    private ArrayList<Observer> observers = new ArrayList<>();
 
     public Level(int sizeX, int sizeY, TileShape shape) {
 
@@ -34,17 +37,19 @@ public class Level {
 
     public void addTile(Tile t) {
         tiles.add(t);
+        t.addObserver(this);
     }
 
-    public void shuffle() {
+    public Level shuffle() {
         Random random = new Random();
         for(Tile t : tiles) {
-            if(t.getContent() == Component.OUTLET)
+            if(t.getContent() == TileComponent.OUTLET)
                 continue;
             int rand = random.nextInt(t.getSides().length) + 1;
             for(int i=0;i<rand;i++)
                 t.rotate();
         } 
+        return this;
     }
 
     public int getSizeX() {
@@ -74,5 +79,22 @@ public class Level {
             s += t + "\n";
         }
         return s;
+    }
+
+    @Override
+    public void addObserver(Observer o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void notifyObserver() {
+        for(Observer o : observers) {
+            o.update();
+        }
+    }
+
+    @Override
+    public void update() {
+        notifyObserver();
     }
 }

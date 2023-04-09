@@ -4,35 +4,27 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-
-import fr.jacototlefranc.energy.model.Level;
+import javax.swing.JPanel;
 
 public class Frame extends JFrame {
     private JMenuBar menubar;
     private JMenu files;
     private JMenuItem quit;
+    private JMenuItem menu;
 
-    private BoardView boardView;
-
-    public Frame(String title, Level gameLevel) {
+    public Frame(String title) {
         super(title);
-
-        this.boardView = new BoardView(gameLevel);
-
-        this.getContentPane().add(this.boardView);
 
         this.menubar = new JMenuBar();
         this.files = new JMenu("Fichier");
         this.quit = new JMenuItem("Quitter");
+        this.menu = new JMenuItem("Menu");
 
         this.files.add(quit);
+        this.files.add(menu);
         this.menubar.add(files);
 
         this.setJMenuBar(menubar);
-
-        this.pack();
-        this.setResizable(false);
-        this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
     }
@@ -46,6 +38,15 @@ public class Frame extends JFrame {
 
     public JMenuItem getQuit() {
         return quit;
+    }
+    public JMenuItem getMenu() {
+        return menu;
+    }
+
+    public void setPanel(JPanel p) {
+        this.getContentPane().removeAll();
+        this.getContentPane().add(p);
+        this.pack();
     }
 
 }

@@ -64,7 +64,7 @@ public final class TextureManager {
 
             square_lightbulb = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE, TileProps.TILE_SIZE,
                     TileProps.TILE_SIZE);
-            square_lightbulb_powered = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE * 5,
+            square_lightbulb_powered = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE * 4,
                     TileProps.TILE_SIZE, TileProps.TILE_SIZE);
             hexagonal_lightbulb = canva.getSubimage(TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE,
                     TileProps.TILE_SIZE);
