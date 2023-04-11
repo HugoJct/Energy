@@ -20,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import fr.jacototlefranc.energy.view.textures.TextureManager;
 import fr.jacototlefranc.energy.view.textures.TextureName;
@@ -54,7 +55,7 @@ public class SelectMenu extends JPanel {
          JPanel box = new JPanel();
          box.setBackground(Color.BLACK);
          box.setLayout(new BoxLayout(box, BoxLayout.PAGE_AXIS));
-         box.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        //  box.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
          MouseAdapter hover = new MouseAdapter() {
             @Override
@@ -77,9 +78,9 @@ public class SelectMenu extends JPanel {
             this.levelsListButtons[i].setBackground(Color.BLACK);
             this.levelsListButtons[i].setForeground(Color.WHITE);
             this.levelsListButtons[i].setAlignmentX(Component.CENTER_ALIGNMENT);
-            this.levelsListButtons[i].setMinimumSize(new Dimension(40, 40));
-            this.levelsListButtons[i].setPreferredSize(new Dimension(40, 60));
-            this.levelsListButtons[i].setMaximumSize(new Dimension(100, 100));
+            this.levelsListButtons[i].setMinimumSize(new Dimension(150, 60));
+            this.levelsListButtons[i].setPreferredSize(new Dimension(200, 60));
+            this.levelsListButtons[i].setMaximumSize(new Dimension(200, 100));
             this.levelsListButtons[i].setFocusPainted(false);
             this.levelsListButtons[i].addMouseListener(hover);
             box.add(this.levelsListButtons[i]);
@@ -108,10 +109,12 @@ public class SelectMenu extends JPanel {
         buttonsAndDeco.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 20));
         buttonsAndDeco.setLayout(new BoxLayout(buttonsAndDeco, BoxLayout.LINE_AXIS));
 
+        JScrollPane scroll = new JScrollPane(box);
+
         buttonsAndDeco.add(outletLabel1);
-        box.add(Box.createHorizontalGlue());
-        buttonsAndDeco.add(box);
-        box.add(Box.createHorizontalGlue());
+        buttonsAndDeco.add(Box.createHorizontalGlue());
+        buttonsAndDeco.add(scroll);
+        buttonsAndDeco.add(Box.createHorizontalGlue());
         buttonsAndDeco.add(outletLabel2);
 
         /*
