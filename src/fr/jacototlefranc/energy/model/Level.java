@@ -15,7 +15,6 @@ public class Level implements Observer, Observable {
     
     private int sizeX;
     private int sizeY;
-    private int[][] adjacencyMatrix;
     private List<Tile> tiles;
     private TileShape tileShape;
     private ArrayList<Observer> observers = new ArrayList<>();
@@ -25,13 +24,6 @@ public class Level implements Observer, Observable {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         this.tileShape = shape;
-
-        adjacencyMatrix = new int[sizeX][sizeY];
-        for(int i=0; i<sizeX; i++) {
-            for(int j=0;j<sizeY;j++) {
-                adjacencyMatrix[i][j] = -1;
-            }
-        }
 
         tiles = new ArrayList<>();
 
@@ -45,61 +37,42 @@ public class Level implements Observer, Observable {
         return index1 / sizeY == index2 / sizeY;
     }
 
-    private boolean hasBeenVisited(int index, int lastIndex, int firstIndex) {
-        return index == lastIndex || index == firstIndex;
-    }
-
     private boolean areSidesConnected(TileEdge te1, TileEdge te2) {
         return te1.isConnected() && te2.isConnected();
     }
 
     private void spreadSignal(Tile currentTile, int currentIndex, int lastIndex, int firstIndex) {
 
-        // évaluation à droite
-        if (isIndexOfList(currentIndex+1) && areOnTheSameAxe(currentIndex, currentIndex+1) && !tiles.get(currentIndex+1).isPowered()) {
-            System.out.println("Tiles " + currentIndex + " évaluation à droite");
-            if (areSidesConnected(currentTile.getSides()[1], tiles.get(currentIndex+1).getSides()[3])) {
-                System.out.println("Tiles " + (currentIndex+1) + " powering");
-                tiles.get(currentIndex+1).setPowered(true);
-                if (!hasBeenVisited(currentIndex+1, lastIndex, firstIndex)) {
-                    spreadSignal(tiles.get(currentIndex+1), currentIndex+1, currentIndex, firstIndex);
-                }
+        Tile[] adjacentTiles = { 
+            isIndexOfList(currentIndex + 1) && areOnTheSameAxe(currentIndex, currentIndex + 1) ? tiles.get(currentIndex + 1) : null,
+            isIndexOfList(currentIndex - 1) && areOnTheSameAxe(currentIndex, currentIndex - 1) ? tiles.get(currentIndex - 1) : null,
+            isIndexOfList(currentIndex + sizeY) ? tiles.get(currentIndex + sizeY) : null,
+            isIndexOfList(currentIndex - sizeY) ? tiles.get(currentIndex - sizeY) : null
+        };
+    
+        for (Tile tile : adjacentTiles) {
+            if (tile == null || tile.isPowered()) {
+                continue;
             }
-        }
-
-        // évaluation à gauche
-        if (isIndexOfList(currentIndex-1) && areOnTheSameAxe(currentIndex, currentIndex-1) && !tiles.get(currentIndex-1).isPowered()) {
-            System.out.println("Tiles " + currentIndex + " évaluation à gauche");
-            if (areSidesConnected(currentTile.getSides()[3], tiles.get(currentIndex-1).getSides()[1])) {
-                System.out.println("Tiles " + (currentIndex-1) + " powering");
-                tiles.get(currentIndex-1).setPowered(true);
-                if (!hasBeenVisited(currentIndex-1, lastIndex, firstIndex)) {
-                    spreadSignal(tiles.get(currentIndex-1), currentIndex-1, currentIndex, firstIndex);
-                }
+    
+            int tileIndex = tiles.indexOf(tile);
+            TileEdge[] edges = currentTile.getSides();
+            TileEdge[] adjacentEdges = tile.getSides();
+            int edgeIndex = -1;
+    
+            if (tileIndex == currentIndex + 1) {
+                edgeIndex = 1;
+            } else if (tileIndex == currentIndex - 1) {
+                edgeIndex = 3;
+            } else if (tileIndex == currentIndex + sizeY) {
+                edgeIndex = 2;
+            } else if (tileIndex == currentIndex - sizeY) {
+                edgeIndex = 0;
             }
-        }
-
-        // évaluation en bas
-        if (isIndexOfList(currentIndex+sizeY) && !tiles.get(currentIndex+sizeY).isPowered()) {
-            System.out.println("Tiles " + currentIndex + " évaluation en bas");
-            if (areSidesConnected(currentTile.getSides()[2], tiles.get(currentIndex+sizeY).getSides()[0])) {
-                System.out.println("Tiles " + (currentIndex+sizeY) + " powering");
-                tiles.get(currentIndex+sizeY).setPowered(true);
-                if (!hasBeenVisited(currentIndex+sizeY, lastIndex, firstIndex)) {
-                    spreadSignal(tiles.get(currentIndex+sizeY), currentIndex+sizeY, currentIndex, firstIndex);
-                }
-            }
-        }
-
-        // évaluation en haut
-        if (isIndexOfList(currentIndex-sizeY) && !tiles.get(currentIndex-sizeY).isPowered()) {
-            System.out.println("Tiles " + currentIndex + " évaluation en haut");
-            if (areSidesConnected(currentTile.getSides()[0], tiles.get(currentIndex-sizeY).getSides()[2])) {
-                System.out.println("Tiles " + (currentIndex-sizeY) + " powering");
-                tiles.get(currentIndex-sizeY).setPowered(true);
-                if (!hasBeenVisited(currentIndex-sizeY, lastIndex, firstIndex)) {
-                    spreadSignal(tiles.get(currentIndex-sizeY), currentIndex-sizeY, currentIndex, firstIndex);
-                }
+    
+            if (areSidesConnected(edges[edgeIndex], adjacentEdges[(edgeIndex + 2) % 4])) {
+                tile.setPowered(true);
+                spreadSignal(tile, tileIndex, currentIndex, firstIndex);
             }
         }
 
