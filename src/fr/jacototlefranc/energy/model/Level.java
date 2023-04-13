@@ -79,12 +79,7 @@ public class Level implements Observer, Observable {
     }
 
     private boolean areOnTheSameAxe(int index1, int index2) {
-        if (index1 < index2) {
-            return index2%sizeY > index1;
-        }
-        else {
-            return index2%sizeY < index1;
-        }
+        return index1 / sizeY == index2 / sizeY;
     }
 
     private boolean hasBeenVisited(int index, int lastIndex, int firstIndex) {
@@ -96,15 +91,13 @@ public class Level implements Observer, Observable {
     }
 
     private void updateConnections(Tile currentTile, int currentIndex, int lastIndex, int firstIndex) {
-        boolean isConnectedWithNeighbour = false;
 
         // évaluation à droite
         if (isIndexOfList(currentIndex+1) && areOnTheSameAxe(currentIndex, currentIndex+1)) {
             System.out.println("Tiles " + currentIndex + " évaluation à droite");
             if (areSidesConnected(currentTile.getSides()[1], tiles.get(currentIndex+1).getSides()[3])) {
-                System.out.println("Tiles " + currentIndex+1 + " powering");
+                System.out.println("Tiles " + (currentIndex+1) + " powering");
                 tiles.get(currentIndex+1).setPowered(true);
-                isConnectedWithNeighbour = true;
                 if (!hasBeenVisited(currentIndex+1, lastIndex, firstIndex)) {
                     updateConnections(tiles.get(currentIndex+1), currentIndex+1, currentIndex, firstIndex);
                 }
@@ -117,7 +110,6 @@ public class Level implements Observer, Observable {
             if (areSidesConnected(currentTile.getSides()[3], tiles.get(currentIndex-1).getSides()[1])) {
                 System.out.println("Tiles " + (currentIndex-1) + " powering");
                 tiles.get(currentIndex-1).setPowered(true);
-                isConnectedWithNeighbour = true;
                 if (!hasBeenVisited(currentIndex-1, lastIndex, firstIndex)) {
                     updateConnections(tiles.get(currentIndex-1), currentIndex-1, currentIndex, firstIndex);
                 }
@@ -130,7 +122,6 @@ public class Level implements Observer, Observable {
             if (areSidesConnected(currentTile.getSides()[2], tiles.get(currentIndex+sizeY).getSides()[0])) {
                 System.out.println("Tiles " + (currentIndex+sizeY) + " powering");
                 tiles.get(currentIndex+sizeY).setPowered(true);
-                isConnectedWithNeighbour = true;
                 if (!hasBeenVisited(currentIndex+sizeY, lastIndex, firstIndex)) {
                     updateConnections(tiles.get(currentIndex+sizeY), currentIndex+sizeY, currentIndex, firstIndex);
                 }
@@ -143,27 +134,28 @@ public class Level implements Observer, Observable {
             if (areSidesConnected(currentTile.getSides()[0], tiles.get(currentIndex-sizeY).getSides()[2])) {
                 System.out.println("Tiles " + (currentIndex-sizeY) + " powering");
                 tiles.get(currentIndex-sizeY).setPowered(true);
-                isConnectedWithNeighbour = true;
                 if (!hasBeenVisited(currentIndex-sizeY, lastIndex, firstIndex)) {
                     updateConnections(tiles.get(currentIndex-sizeY), currentIndex-sizeY, currentIndex, firstIndex);
                 }
             }
         }
 
-        if (!isConnectedWithNeighbour && currentTile.getContent() != TileComponent.OUTLET) {
-            System.out.println("Tiles " + currentIndex + " unpowering");
-            currentTile.setPowered(false);
-        }
     }
 
     public void updateTilesProperties() {
         System.out.println("Update");
+        System.out.println(sizeY);
+        for (Tile t : tiles) {
+            if (t.getContent() != TileComponent.OUTLET) {
+                t.setPowered(false);
+            }
+        }
 
         for (int i = 0; i < tiles.size(); i++) {
             Tile currentTile = tiles.get(i);
 
-            if (currentTile.isPowered()) {
-                System.out.println("Tile " + i + " is powered");
+            if (currentTile.getContent() == TileComponent.OUTLET) {
+                System.out.println("Tile " + i + " is an outlet");
                 updateConnections(currentTile, i, i, i);
             }
 
