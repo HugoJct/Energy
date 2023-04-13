@@ -43,38 +43,81 @@ public class Level implements Observer, Observable {
 
     private void spreadSignal(Tile currentTile, int currentIndex, int lastIndex, int firstIndex) {
 
-        Tile[] adjacentTiles = { 
-            isIndexOfList(currentIndex + 1) && areOnTheSameAxe(currentIndex, currentIndex + 1) ? tiles.get(currentIndex + 1) : null,
-            isIndexOfList(currentIndex - 1) && areOnTheSameAxe(currentIndex, currentIndex - 1) ? tiles.get(currentIndex - 1) : null,
-            isIndexOfList(currentIndex + sizeY) ? tiles.get(currentIndex + sizeY) : null,
-            isIndexOfList(currentIndex - sizeY) ? tiles.get(currentIndex - sizeY) : null
-        };
-    
-        for (Tile tile : adjacentTiles) {
-            if (tile == null || tile.isPowered()) {
-                continue;
-            }
-    
-            int tileIndex = tiles.indexOf(tile);
-            TileEdge[] edges = currentTile.getSides();
-            TileEdge[] adjacentEdges = tile.getSides();
-            int edgeIndex = -1;
-    
-            if (tileIndex == currentIndex + 1) {
-                edgeIndex = 1;
-            } else if (tileIndex == currentIndex - 1) {
-                edgeIndex = 3;
-            } else if (tileIndex == currentIndex + sizeY) {
-                edgeIndex = 2;
-            } else if (tileIndex == currentIndex - sizeY) {
-                edgeIndex = 0;
-            }
-    
-            if (areSidesConnected(edges[edgeIndex], adjacentEdges[(edgeIndex + 2) % 4])) {
-                tile.setPowered(true);
-                spreadSignal(tile, tileIndex, currentIndex, firstIndex);
+        if (tileShape == TileShape.SQUARE) {
+            Tile[] adjacentTiles = { 
+                isIndexOfList(currentIndex + 1) && areOnTheSameAxe(currentIndex, currentIndex + 1) ? tiles.get(currentIndex + 1) : null,
+                isIndexOfList(currentIndex - 1) && areOnTheSameAxe(currentIndex, currentIndex - 1) ? tiles.get(currentIndex - 1) : null,
+                isIndexOfList(currentIndex + sizeY) ? tiles.get(currentIndex + sizeY) : null,
+                isIndexOfList(currentIndex - sizeY) ? tiles.get(currentIndex - sizeY) : null
+            };
+        
+            for (Tile tile : adjacentTiles) {
+                if (tile == null || tile.isPowered()) {
+                    continue;
+                }
+        
+                int tileIndex = tiles.indexOf(tile);
+                TileEdge[] edges = currentTile.getSides();
+                TileEdge[] adjacentEdges = tile.getSides();
+                int edgeIndex = -1;
+        
+                if (tileIndex == currentIndex + 1) {
+                    edgeIndex = 1;
+                } else if (tileIndex == currentIndex - 1) {
+                    edgeIndex = 3;
+                } else if (tileIndex == currentIndex + sizeY) {
+                    edgeIndex = 2;
+                } else if (tileIndex == currentIndex - sizeY) {
+                    edgeIndex = 0;
+                }
+        
+                if (areSidesConnected(edges[edgeIndex], adjacentEdges[(edgeIndex + 2) % 4])) {
+                    tile.setPowered(true);
+                    spreadSignal(tile, tileIndex, currentIndex, firstIndex);
+                }
             }
         }
+        else if (tileShape == TileShape.HEXAGON) {
+            Tile[] adjacentTiles = {
+                isIndexOfList(currentIndex + 1) && areOnTheSameAxe(currentIndex, currentIndex + 1) ? tiles.get(currentIndex + 1) : null,
+                isIndexOfList(currentIndex - 1) && areOnTheSameAxe(currentIndex, currentIndex - 1) ? tiles.get(currentIndex - 1) : null,
+                isIndexOfList(currentIndex + sizeY) ? tiles.get(currentIndex + sizeY) : null,
+                isIndexOfList(currentIndex - sizeY) ? tiles.get(currentIndex - sizeY) : null,
+                isIndexOfList(currentIndex - sizeY + 1) && areOnTheSameAxe(currentIndex, currentIndex - sizeY + 1) ? tiles.get(currentIndex - sizeY + 1) : null,
+                isIndexOfList(currentIndex + sizeY - 1) && areOnTheSameAxe(currentIndex, currentIndex + sizeY - 1) ? tiles.get(currentIndex + sizeY - 1) : null
+            };
+            
+            for (Tile tile : adjacentTiles) {
+                if (tile == null || tile.isPowered()) {
+                    continue;
+                }
+            
+                int tileIndex = tiles.indexOf(tile);
+                TileEdge[] edges = currentTile.getSides();
+                TileEdge[] adjacentEdges = tile.getSides();
+                int edgeIndex = -1;
+            
+                if (tileIndex == currentIndex + 1) {
+                    edgeIndex = 1;
+                } else if (tileIndex == currentIndex - 1) {
+                    edgeIndex = 4;
+                } else if (tileIndex == currentIndex + sizeY) {
+                    edgeIndex = 2;
+                } else if (tileIndex == currentIndex - sizeY) {
+                    edgeIndex = 5;
+                } else if (tileIndex == currentIndex - sizeY + 1) {
+                    edgeIndex = 0;
+                } else if (tileIndex == currentIndex + sizeY - 1) {
+                    edgeIndex = 3;
+                }
+            
+                if (areSidesConnected(edges[edgeIndex], adjacentEdges[(edgeIndex + 3) % 6])) {
+                    tile.setPowered(true);
+                    spreadSignal(tile, tileIndex, currentIndex, firstIndex);
+                }
+            }
+        }
+
 
     }
 
