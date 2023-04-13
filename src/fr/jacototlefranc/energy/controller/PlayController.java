@@ -95,6 +95,8 @@ public class PlayController extends MouseAdapter {
                 if(t.getContent() != TileComponent.OUTLET)
                     t.rotate();
                 lvl.updateTilesProperties();
+                if (lvl.isWinning())
+                    System.out.println("You win !");
                 return;
             }
 

@@ -139,6 +139,11 @@ public class Level implements Observer, Observable {
     }
 
     public boolean isWinning() {
+        for (Tile t : tiles) {
+            if (t.getContent() == TileComponent.LIGHTBULB && !t.isPowered()) {
+                return false;
+            }
+        }
         return true;
     }
 
