@@ -37,13 +37,14 @@ public class Level implements Observer, Observable {
         return index1 / sizeY == index2 / sizeY;
     }
 
-    private boolean areSidesConnected(TileEdge te1, TileEdge te2) {
+    private boolean areEdgesConnected(TileEdge te1, TileEdge te2) {
         return te1.isConnected() && te2.isConnected();
     }
 
     private void spreadSignal(Tile currentTile, int currentIndex, int lastIndex, int firstIndex) {
 
         if (tileShape == TileShape.SQUARE) {
+
             Tile[] adjacentTiles = { 
                 isIndexOfList(currentIndex + 1) && areOnTheSameAxe(currentIndex, currentIndex + 1) ? tiles.get(currentIndex + 1) : null,
                 isIndexOfList(currentIndex - 1) && areOnTheSameAxe(currentIndex, currentIndex - 1) ? tiles.get(currentIndex - 1) : null,
@@ -52,15 +53,24 @@ public class Level implements Observer, Observable {
             };
         
             for (Tile tile : adjacentTiles) {
+
+                // If the tile is null or already powered, skip it
                 if (tile == null || tile.isPowered()) {
                     continue;
                 }
         
+                // Get the index of the tile in the list
                 int tileIndex = tiles.indexOf(tile);
+
+                // Get the edges of the current tile and the adjacent tile
                 TileEdge[] edges = currentTile.getSides();
+
+                // 0 = top, 1 = right, 2 = bottom, 3 = left
                 TileEdge[] adjacentEdges = tile.getSides();
+
                 int edgeIndex = -1;
         
+                // Get the index of the edge that is connected to the adjacent tile
                 if (tileIndex == currentIndex + 1) {
                     edgeIndex = 1;
                 } else if (tileIndex == currentIndex - 1) {
@@ -71,54 +81,85 @@ public class Level implements Observer, Observable {
                     edgeIndex = 0;
                 }
         
-                if (areSidesConnected(edges[edgeIndex], adjacentEdges[(edgeIndex + 2) % 4])) {
+                if (areEdgesConnected(edges[edgeIndex], adjacentEdges[(edgeIndex + 2) % 4])) {
                     tile.setPowered(true);
                     spreadSignal(tile, tileIndex, currentIndex, firstIndex);
                 }
             }
-        }
-        else if (tileShape == TileShape.HEXAGON) {
-            Tile[] adjacentTiles = {
-                isIndexOfList(currentIndex + 1) && areOnTheSameAxe(currentIndex, currentIndex + 1) ? tiles.get(currentIndex + 1) : null,
-                isIndexOfList(currentIndex - 1) && areOnTheSameAxe(currentIndex, currentIndex - 1) ? tiles.get(currentIndex - 1) : null,
-                isIndexOfList(currentIndex + sizeY) ? tiles.get(currentIndex + sizeY) : null,
-                isIndexOfList(currentIndex - sizeY) ? tiles.get(currentIndex - sizeY) : null,
-                isIndexOfList(currentIndex - sizeY + 1) && areOnTheSameAxe(currentIndex, currentIndex - sizeY + 1) ? tiles.get(currentIndex - sizeY + 1) : null,
-                isIndexOfList(currentIndex + sizeY - 1) && areOnTheSameAxe(currentIndex, currentIndex + sizeY - 1) ? tiles.get(currentIndex + sizeY - 1) : null
-            };
-            
-            for (Tile tile : adjacentTiles) {
-                if (tile == null || tile.isPowered()) {
+        } else {
+                
+            int row = currentIndex/sizeY;
+            boolean isEvenRow = (row + currentIndex) % 2  == 0;
+            int[] adjacentIndices;
+            System.out.println("Tile " + currentIndex + " : " + isEvenRow);
+
+            if (isEvenRow) {
+                adjacentIndices = new int[] {
+                    currentIndex + 1, // bottom right
+                    currentIndex + sizeY - 1, // top right
+                    currentIndex - 1, // bottom left
+                    currentIndex - sizeY - 1, // top left
+                    currentIndex - sizeY, // top
+                    currentIndex + sizeY // bottom
+                };
+            } else {
+                adjacentIndices = new int[] {
+                    currentIndex + sizeY + 1, // bottom right
+                    currentIndex + 1, // top right
+                    currentIndex + sizeY - 1, // bottom left
+                    currentIndex - 1, // top left
+                    currentIndex - sizeY, // top
+                    currentIndex + sizeY // bottom
+                };
+            }
+    
+            for (int adjacentIndex : adjacentIndices) {
+                if (!isIndexOfList(adjacentIndex)) {
                     continue;
                 }
-            
-                int tileIndex = tiles.indexOf(tile);
-                TileEdge[] edges = currentTile.getSides();
-                TileEdge[] adjacentEdges = tile.getSides();
-                int edgeIndex = -1;
-            
-                if (tileIndex == currentIndex + 1) {
-                    edgeIndex = 1;
-                } else if (tileIndex == currentIndex - 1) {
-                    edgeIndex = 4;
-                } else if (tileIndex == currentIndex + sizeY) {
-                    edgeIndex = 2;
-                } else if (tileIndex == currentIndex - sizeY) {
-                    edgeIndex = 5;
-                } else if (tileIndex == currentIndex - sizeY + 1) {
-                    edgeIndex = 0;
-                } else if (tileIndex == currentIndex + sizeY - 1) {
-                    edgeIndex = 3;
+    
+                Tile adjacentTile = tiles.get(adjacentIndex);
+                if (adjacentTile == null || adjacentTile.isPowered()) {
+                    continue;
                 }
-            
-                if (areSidesConnected(edges[edgeIndex], adjacentEdges[(edgeIndex + 3) % 6])) {
-                    tile.setPowered(true);
-                    spreadSignal(tile, tileIndex, currentIndex, firstIndex);
+    
+                TileEdge[] edges = currentTile.getSides();
+                TileEdge[] adjacentEdges = adjacentTile.getSides();
+    
+                int edgeIndex = -1;
+
+                // Get the index of the edge that is connected to the adjacent tile
+                if (adjacentIndex == currentIndex - sizeY) {
+                    edgeIndex = 0; // top
+                } else if (adjacentIndex == currentIndex + sizeY) {
+                    edgeIndex = 3; // bottom
+                } else if (!isEvenRow && adjacentIndex == currentIndex + 1) {
+                    edgeIndex = 1; // top right
+                } else if (!isEvenRow && adjacentIndex == currentIndex + sizeY + 1) {
+                    edgeIndex = 2; // bottom right
+                } else if (!isEvenRow && adjacentIndex == currentIndex + sizeY - 1) {
+                    edgeIndex = 4; // bottom left
+                } else if (!isEvenRow && adjacentIndex == currentIndex - 1) {
+                    edgeIndex = 5; // top left
+                } else if (isEvenRow && adjacentIndex == currentIndex + sizeY - 1) {
+                    edgeIndex = 1; // top right
+                } else if (isEvenRow && adjacentIndex == currentIndex + 1) {
+                    edgeIndex = 2; // bottom right
+                } else if (isEvenRow && adjacentIndex == currentIndex - 1) {
+                    edgeIndex = 4; // bottom left
+                } else if (isEvenRow && adjacentIndex == currentIndex - sizeY - 1) {
+                    edgeIndex = 5; // top left
+                } else {
+                    System.out.println("Error: adjacentIndex is not adjacent to currentIndex");
+                }
+    
+                if (areEdgesConnected(edges[edgeIndex], adjacentEdges[(edgeIndex + 3) % 6])) {
+                    System.out.println("Tile " + currentIndex + " is connected to tile " + adjacentIndex);
+                    adjacentTile.setPowered(true);
+                    spreadSignal(adjacentTile, adjacentIndex, currentIndex, firstIndex);
                 }
             }
         }
-
-
     }
 
     public void addTile(Tile t) {
@@ -165,7 +206,6 @@ public class Level implements Observer, Observable {
 
     public void updateTilesProperties() {
         System.out.println("Update");
-        System.out.println(sizeY);
         for (Tile t : tiles) {
             if (t.getContent() != TileComponent.OUTLET) {
                 t.setPowered(false);
