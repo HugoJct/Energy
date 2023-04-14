@@ -95,25 +95,26 @@ public class Level implements Observer, Observable {
 
             if (isEvenRow) {
                 adjacentIndices = new int[] {
-                    currentIndex + 1, // bottom right
-                    currentIndex + sizeY - 1, // top right
-                    currentIndex - 1, // bottom left
-                    currentIndex - sizeY - 1, // top left
                     currentIndex - sizeY, // top
-                    currentIndex + sizeY // bottom
+                    currentIndex - sizeY + 1, // top right
+                    currentIndex + 1, // bottom right
+                    currentIndex + sizeY, // bottom
+                    currentIndex - 1, // bottom left
+                    currentIndex - sizeY - 1 // top left
                 };
             } else {
                 adjacentIndices = new int[] {
-                    currentIndex + sizeY + 1, // bottom right
-                    currentIndex + 1, // top right
-                    currentIndex + sizeY - 1, // bottom left
-                    currentIndex - 1, // top left
                     currentIndex - sizeY, // top
-                    currentIndex + sizeY // bottom
+                    currentIndex + 1, // top right
+                    currentIndex + sizeY + 1, // bottom right
+                    currentIndex + sizeY, // bottom
+                    currentIndex + sizeY - 1, // bottom left
+                    currentIndex - 1 // top left
                 };
             }
     
             for (int adjacentIndex : adjacentIndices) {
+
                 if (!isIndexOfList(adjacentIndex)) {
                     continue;
                 }
@@ -141,7 +142,7 @@ public class Level implements Observer, Observable {
                     edgeIndex = 4; // bottom left
                 } else if (!isEvenRow && adjacentIndex == currentIndex - 1) {
                     edgeIndex = 5; // top left
-                } else if (isEvenRow && adjacentIndex == currentIndex + sizeY - 1) {
+                } else if (isEvenRow && adjacentIndex == currentIndex - sizeY + 1) {
                     edgeIndex = 1; // top right
                 } else if (isEvenRow && adjacentIndex == currentIndex + 1) {
                     edgeIndex = 2; // bottom right
