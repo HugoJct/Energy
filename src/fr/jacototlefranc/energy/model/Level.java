@@ -91,7 +91,6 @@ public class Level implements Observer, Observable {
             int row = currentIndex/sizeY;
             boolean isEvenRow = (row + currentIndex) % 2  == 0;
             int[] adjacentIndices;
-            System.out.println("Tile " + currentIndex + " : " + isEvenRow);
 
             if (isEvenRow) {
                 adjacentIndices = new int[] {
@@ -150,12 +149,9 @@ public class Level implements Observer, Observable {
                     edgeIndex = 4; // bottom left
                 } else if (isEvenRow && adjacentIndex == currentIndex - sizeY - 1) {
                     edgeIndex = 5; // top left
-                } else {
-                    System.out.println("Error: adjacentIndex is not adjacent to currentIndex");
                 }
     
                 if (areEdgesConnected(edges[edgeIndex], adjacentEdges[(edgeIndex + 3) % 6])) {
-                    System.out.println("Tile " + currentIndex + " is connected to tile " + adjacentIndex);
                     adjacentTile.setPowered(true);
                     spreadSignal(adjacentTile, adjacentIndex, currentIndex, firstIndex);
                 }
@@ -206,7 +202,6 @@ public class Level implements Observer, Observable {
     }
 
     public void updateTilesProperties() {
-        System.out.println("Update");
         boolean iswifiPowered = false;
         for (Tile t : tiles) {
             if (t.getContent() != TileComponent.OUTLET) {
@@ -235,14 +230,12 @@ public class Level implements Observer, Observable {
         for (Tile t : tiles) {
             if (t.getContent() == TileComponent.WIFI && t.isPowered()) {
                 iswifiPowered = true;
-                System.out.println("powering first wifi");
             }
         }
 
         for (Tile t : tiles) {
             if (t.getContent() == TileComponent.WIFI && iswifiPowered) {
                 t.setPowered(true);
-                System.out.println("powering next wifi");
             }
         }
 
