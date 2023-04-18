@@ -15,6 +15,7 @@ public class PlayController extends MouseAdapter {
 
     public PlayController(Level l) {
         this.lvl = l;
+        lvl.updateTilesProperties();
     }
 
     @Override
@@ -66,8 +67,12 @@ public class PlayController extends MouseAdapter {
 
                 if (ph.contains(e.getPoint())) {
                     Tile t = lvl.getTiles().get(i);
+                    System.out.println("Tile " + i + " clicked");
                     if(t.getContent() != TileComponent.OUTLET)
                         t.rotate();
+                    lvl.updateTilesProperties();
+                    if (lvl.isWinning())
+                        System.out.println("You win !");
                     return;
                 }
             }
@@ -93,8 +98,12 @@ public class PlayController extends MouseAdapter {
                 Tile t = lvl.getTiles().get(i);
                 if(t.getContent() != TileComponent.OUTLET)
                     t.rotate();
+                lvl.updateTilesProperties();
+                if (lvl.isWinning())
+                    System.out.println("You win !");
                 return;
             }
+
         }
     }
 }
