@@ -19,6 +19,7 @@ public final class TextureManager {
     private BufferedImage hexagonal_outlet;
     private BufferedImage hexagonal_wifi;
     private BufferedImage hexagonal_lightbulb;
+    private BufferedImage hexagonal_lightbulb_powered;
 
     // link from component to tile edge
     private BufferedImage square_component_link;
@@ -66,8 +67,11 @@ public final class TextureManager {
                     TileProps.TILE_SIZE);
             square_lightbulb_powered = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE * 4,
                     TileProps.TILE_SIZE, TileProps.TILE_SIZE);
+
             hexagonal_lightbulb = canva.getSubimage(TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE, TileProps.TILE_SIZE,
                     TileProps.TILE_SIZE);
+            hexagonal_lightbulb_powered = canva.getSubimage(TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE * 4, TileProps.TILE_SIZE,
+            TileProps.TILE_SIZE);
 
             /***************************************
              * COMPONENT LINKS
@@ -188,7 +192,7 @@ public final class TextureManager {
                 case HEXAGONAL_WIFI:
                     return hexagonal_wifi;
                 case HEXAGONAL_LIGHTBULB:
-                    return hexagonal_lightbulb;
+                    return hexagonal_lightbulb_powered;
                 case HEXAGONAL_COMPONENT_LINK:
                     return hexagonal_component_link_powered;
                 case HEXAGONAL_LINK_LONG:

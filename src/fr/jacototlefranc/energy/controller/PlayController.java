@@ -37,7 +37,7 @@ public class PlayController extends MouseAdapter {
 
             boolean driftedDown = false;
 
-            for (int i = 0; i < tileCount; i++) {
+            for (int i = 0; i <= tileCount; i++) {
 
                 if(i > 0) {
 
@@ -85,7 +85,7 @@ public class PlayController extends MouseAdapter {
         p.addPoint(120, 120);
         p.addPoint(0, 120);
 
-        for (int i = 0; i < tileCount; i++) {
+        for (int i = 0; i <= tileCount; i++) {
 
             if (i > 0) {
                 if (i % ymax == 0) {
