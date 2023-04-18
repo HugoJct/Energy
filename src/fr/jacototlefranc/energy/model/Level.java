@@ -209,11 +209,10 @@ public class Level implements Observer, Observable {
         System.out.println("Update");
         boolean iswifiPowered = false;
         for (Tile t : tiles) {
-            if (t.getContent() != TileComponent.OUTLET || t.getContent() != TileComponent.WIFI) {
+            if (t.getContent() != TileComponent.OUTLET) {
                 t.setPowered(false);
             }
             if (t.getContent() == TileComponent.WIFI && t.isPowered()) {
-                System.out.println("Wifi is powered");
                 iswifiPowered = true;
             }
         }
@@ -228,11 +227,34 @@ public class Level implements Observer, Observable {
             Tile currentTile = tiles.get(i);
 
             if (currentTile.getContent() == TileComponent.OUTLET || (currentTile.getContent() == TileComponent.WIFI && iswifiPowered)) {
-                System.out.println("Tile " + i + " is an outlet");
                 spreadSignal(currentTile, i, i, i);
             }
 
         }
+
+        for (Tile t : tiles) {
+            if (t.getContent() == TileComponent.WIFI && t.isPowered()) {
+                iswifiPowered = true;
+                System.out.println("powering first wifi");
+            }
+        }
+
+        for (Tile t : tiles) {
+            if (t.getContent() == TileComponent.WIFI && iswifiPowered) {
+                t.setPowered(true);
+                System.out.println("powering next wifi");
+            }
+        }
+
+        for (int i = 0; i < tiles.size(); i++) {
+            Tile currentTile = tiles.get(i);
+
+            if (currentTile.getContent() == TileComponent.OUTLET || (currentTile.getContent() == TileComponent.WIFI && iswifiPowered)) {
+                spreadSignal(currentTile, i, i, i);
+            }
+
+        }
+
     }
 
 
