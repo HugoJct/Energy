@@ -18,6 +18,7 @@ public final class TextureManager {
 
     private BufferedImage hexagonal_outlet;
     private BufferedImage hexagonal_wifi;
+    private BufferedImage hexagonal_wifi_powered;
     private BufferedImage hexagonal_lightbulb;
     private BufferedImage hexagonal_lightbulb_powered;
 
@@ -58,10 +59,13 @@ public final class TextureManager {
 
             square_wifi = canva.getSubimage(TileProps.TILE_SIZE, TileProps.TILE_SIZE, TileProps.TILE_SIZE,
                     TileProps.TILE_SIZE);
-            square_wifi_powered = canva.getSubimage(TileProps.TILE_SIZE, TileProps.TILE_SIZE * 5, TileProps.TILE_SIZE,
+            square_wifi_powered = canva.getSubimage(TileProps.TILE_SIZE, TileProps.TILE_SIZE * 4, TileProps.TILE_SIZE,
                     TileProps.TILE_SIZE);
+
             hexagonal_wifi = canva.getSubimage(TileProps.TILE_SIZE * 4, TileProps.TILE_SIZE, TileProps.TILE_SIZE,
                     TileProps.TILE_SIZE);
+            hexagonal_wifi_powered = canva.getSubimage(TileProps.TILE_SIZE * 4, TileProps.TILE_SIZE * 4, TileProps.TILE_SIZE,
+            TileProps.TILE_SIZE);
 
             square_lightbulb = canva.getSubimage(TileProps.TILE_SIZE * 2, TileProps.TILE_SIZE, TileProps.TILE_SIZE,
                     TileProps.TILE_SIZE);
@@ -190,7 +194,7 @@ public final class TextureManager {
                 case SQUARE_OUTLINE:
                     return square_outline_powered;
                 case HEXAGONAL_WIFI:
-                    return hexagonal_wifi;
+                    return hexagonal_wifi_powered;
                 case HEXAGONAL_LIGHTBULB:
                     return hexagonal_lightbulb_powered;
                 case HEXAGONAL_COMPONENT_LINK:
