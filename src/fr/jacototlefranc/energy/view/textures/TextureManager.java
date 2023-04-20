@@ -4,52 +4,58 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 import fr.jacototlefranc.energy.model.tile.info.TileProps;
 
 public final class TextureManager {
 
     // components
-    private BufferedImage square_outlet;
-    private BufferedImage square_wifi;
-    private BufferedImage square_lightbulb;
-    private BufferedImage square_wifi_powered;
-    private BufferedImage square_lightbulb_powered;
+    private static BufferedImage square_outlet;
+    private static BufferedImage square_wifi;
+    private static BufferedImage square_lightbulb;
+    private static BufferedImage square_wifi_powered;
+    private static BufferedImage square_lightbulb_powered;
 
-    private BufferedImage hexagonal_outlet;
-    private BufferedImage hexagonal_wifi;
-    private BufferedImage hexagonal_wifi_powered;
-    private BufferedImage hexagonal_lightbulb;
-    private BufferedImage hexagonal_lightbulb_powered;
+    private static BufferedImage hexagonal_outlet;
+    private static BufferedImage hexagonal_wifi;
+    private static BufferedImage hexagonal_wifi_powered;
+    private static BufferedImage hexagonal_lightbulb;
+    private static BufferedImage hexagonal_lightbulb_powered;
 
     // link from component to tile edge
-    private BufferedImage square_component_link;
-    private BufferedImage square_component_link_powered;
+    private static BufferedImage square_component_link;
+    private static BufferedImage square_component_link_powered;
 
-    private BufferedImage square_curve_link;
-    private BufferedImage square_curve_link_powered;
+    private static BufferedImage square_curve_link;
+    private static BufferedImage square_curve_link_powered;
 
-    private BufferedImage square_link_long;
-    private BufferedImage square_link_long_powered;
+    private static BufferedImage square_link_long;
+    private static BufferedImage square_link_long_powered;
 
-    private BufferedImage hexagonal_component_link;
-    private BufferedImage hexagonal_component_link_powered;
+    private static BufferedImage hexagonal_component_link;
+    private static BufferedImage hexagonal_component_link_powered;
 
-    private BufferedImage hexagonal_link_long;
-    private BufferedImage hexagonal_link_long_powered;
+    private static BufferedImage hexagonal_link_long;
+    private static BufferedImage hexagonal_link_long_powered;
 
-    private BufferedImage hexagonal_curve_link_short;
-    private BufferedImage hexagonal_curve_link_long;
-    private BufferedImage hexagonal_curve_link_short_powered;
-    private BufferedImage hexagonal_curve_link_long_powered;
+    private static BufferedImage hexagonal_curve_link_short;
+    private static BufferedImage hexagonal_curve_link_long;
+    private static BufferedImage hexagonal_curve_link_short_powered;
+    private static BufferedImage hexagonal_curve_link_long_powered;
 
     // tile outline
-    private BufferedImage square_outline;
-    private BufferedImage hexagonal_outline;
-    private BufferedImage square_outline_powered;
-    private BufferedImage hexagonal_outline_powered;
+    private static BufferedImage square_outline;
+    private static BufferedImage hexagonal_outline;
+    private static BufferedImage square_outline_powered;
+    private static BufferedImage hexagonal_outline_powered;
 
-    public TextureManager() {
+    private static ImageIcon square_outline_icon;
+    private static ImageIcon hexagonal_outline_icon;
+    private static ImageIcon square_outline_powered_icon;
+    private static ImageIcon hexagonal_outline_powered_icon;
+
+    static {
         try {
             BufferedImage canva = ImageIO.read(new File("res/tex/tuiles.png"));
 
@@ -134,12 +140,30 @@ public final class TextureManager {
                     TileProps.TILE_SIZE, TileProps.TILE_SIZE);
             /**************************************************************************************************/
 
+            square_outline_icon = new ImageIcon(square_outline);
+            hexagonal_outline_icon = new ImageIcon(hexagonal_outline);
+            square_outline_powered_icon = new ImageIcon(square_outline_powered);
+            hexagonal_outline_powered_icon = new ImageIcon(hexagonal_outline_powered);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public BufferedImage getTexture(TextureName name, boolean powered) {
+    public static ImageIcon getIcon(TextureName name, boolean powered) {
+        if (name == TextureName.SQUARE_OUTLINE) {
+            return square_outline_icon;
+        } else if (name == TextureName.HEXAGONAL_OUTLINE) {
+            return hexagonal_outline_icon;
+        } else if (name == TextureName.SQUARE_OUTLINE_POWERED) {
+            return square_outline_powered_icon;
+        } else if (name == TextureName.HEXAGONAL_OUTLINE_POWERED) {
+            return hexagonal_outline_powered_icon;
+        }
+        return null;
+    }
+
+    public static BufferedImage getTexture(TextureName name, boolean powered) {
         if (name == TextureName.SQUARE_OUTLET) {
             return square_outlet;
         } else if (name == TextureName.HEXAGONAL_OUTLET) {
