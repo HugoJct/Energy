@@ -26,7 +26,6 @@ public class Level implements Observer, Observable {
         this.tileShape = shape;
 
         tiles = new ArrayList<>();
-
     }
 
     private boolean isIndexOfList(int index) {

@@ -3,39 +3,45 @@ package fr.jacototlefranc.energy.controller;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import fr.jacototlefranc.energy.model.Level;
+import fr.jacototlefranc.energy.model.tile.Tile;
+import fr.jacototlefranc.energy.model.tile.info.TileComponent;
+import fr.jacototlefranc.energy.model.tile.info.TileShape;
+import fr.jacototlefranc.energy.view.Frame;
 import fr.jacototlefranc.energy.view.editor.SettingsView;
+import fr.jacototlefranc.energy.view.ingame.BoardView;
 import fr.jacototlefranc.energy.view.textures.TextureManager;
 import fr.jacototlefranc.energy.view.textures.TextureName;
 
 public class SettingsController {
     
-    private String shapeSelected;
+    private TileShape shapeSelected;
 
-    public SettingsController(SettingsView settingsView) {
+    public SettingsController(Frame f, SettingsView settingsView) {
 
-        shapeSelected = "square";
+        shapeSelected = TileShape.SQUARE;
 
         settingsView.getSquare().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                if (shapeSelected != "square") {
+                if (shapeSelected != TileShape.SQUARE) {
                     settingsView.getSquare().setIcon(TextureManager.getIcon(TextureName.SQUARE_OUTLINE_POWERED, true));
                 }
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                if (shapeSelected != "square") {
+                if (shapeSelected != TileShape.SQUARE) {
                     settingsView.getSquare().setIcon(TextureManager.getIcon(TextureName.SQUARE_OUTLINE, false));
             
                 }
             }
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (shapeSelected != "square") {
+                if (shapeSelected != TileShape.SQUARE) {
                     settingsView.getSquare().setIcon(TextureManager.getIcon(TextureName.SQUARE_OUTLINE_POWERED, true));
                     settingsView.getHexagon().setIcon(TextureManager.getIcon(TextureName.HEXAGONAL_OUTLINE, false));
-                    shapeSelected = "square";
+                    shapeSelected = TileShape.SQUARE;
                 }
             }
         });
@@ -43,42 +49,39 @@ public class SettingsController {
         settingsView.getHexagon().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                if (shapeSelected != "hexagon") {
+                if (shapeSelected != TileShape.HEXAGON) {
                     settingsView.getHexagon().setIcon(TextureManager.getIcon(TextureName.HEXAGONAL_OUTLINE_POWERED, true));
                 }
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                if (shapeSelected != "hexagon") {
+                if (shapeSelected != TileShape.HEXAGON) {
                     settingsView.getHexagon().setIcon(TextureManager.getIcon(TextureName.HEXAGONAL_OUTLINE, false));
                 }
             }
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (shapeSelected != "hexagon") {
+                if (shapeSelected != TileShape.HEXAGON) {
                     settingsView.getHexagon().setIcon(TextureManager.getIcon(TextureName.HEXAGONAL_OUTLINE_POWERED, true));
                     settingsView.getSquare().setIcon(TextureManager.getIcon(TextureName.SQUARE_OUTLINE, false));
-                    shapeSelected = "hexagon";
+                    shapeSelected = TileShape.HEXAGON;
                 }
             }
         });
 
-        settingsView.getContinu().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
+        settingsView.getContinu().addActionListener(e -> {
 
+            Level lvl = new Level(settingsView.getX(), settingsView.getY(), this.shapeSelected);
+
+            for(int i=0; i < lvl.getSizeX() * lvl.getSizeY(); i++) {
+                lvl.addTile(new Tile.TileBuilder().setContent(TileComponent.NONE).setShape(shapeSelected).build());
             }
 
-            @Override
-            public void mouseExited(MouseEvent e) {
+            BoardView bv = new BoardView(lvl);
 
-            }
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                System.out.println("continuer");
-            }
-        });
+            new EditorController(bv, lvl);
+            f.setPanel(bv);
+        });;
     }
 }

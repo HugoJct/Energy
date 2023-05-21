@@ -18,9 +18,10 @@ public class Main {
         levels = new HashMap<String, Level>();
         for (File f : files) {
             if (f.getName().endsWith(".nrg")) {
-                levels.put(f.getName(), LevelParser.parse(f).shuffle());
+                levels.put(f.getName(), LevelParser.parse(f));
             }
         }
+        LevelParser.saveLevel(levels.get("level3.nrg"));
     }
 
     public static void main(String[] args) {

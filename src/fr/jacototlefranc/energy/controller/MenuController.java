@@ -19,8 +19,8 @@ public class MenuController {
         MainMenu menu = new MainMenu();
         SettingsView settingsView = new SettingsView();
         SelectMenu select = new SelectMenu(new ArrayList<String>(levels.keySet()));
-        SelectController sc = new SelectController(frame, menu, levels, select);
-        SettingsController settings = new SettingsController(settingsView);
+        new SelectController(frame, menu, levels, select);
+        new SettingsController(frame, settingsView);
         frame.setPanel(menu);
 
         menu.getPlayButton().addActionListener(e -> {

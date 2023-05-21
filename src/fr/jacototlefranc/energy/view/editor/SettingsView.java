@@ -1,5 +1,9 @@
 package fr.jacototlefranc.energy.view.editor;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -10,10 +14,6 @@ import javax.swing.SpinnerNumberModel;
 
 import fr.jacototlefranc.energy.view.textures.TextureManager;
 import fr.jacototlefranc.energy.view.textures.TextureName;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 
 public class SettingsView extends JPanel {
     private JSpinner width;
@@ -55,6 +55,14 @@ public class SettingsView extends JPanel {
 
         this.setVisible(true);
 
+    }
+
+    public int getX() {
+        return (int) width.getValue();
+    }
+
+    public int getY() {
+        return (int) height.getValue();
     }
 
     public JRadioButton getSquare() {
