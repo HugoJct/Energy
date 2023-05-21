@@ -159,19 +159,40 @@ public class EditorController extends MouseAdapter {
                 t.notifyObserver();
             }
             return;
+        } else {
+            if (i == (previousTile + lvl.getSizeX())) { // i sous previous
+
+                t.getSides()[0].setConnected(true);
+                pTile.getSides()[3].setConnected(true);
+                t.notifyObserver();
+            } else if (i == (previousTile - lvl.getSizeX())) { // previous sous i
+    
+                t.getSides()[3].setConnected(true);
+                pTile.getSides()[0].setConnected(true);
+                t.notifyObserver();
+            } else if (i == (previousTile + 1) && (i % lvl.getSizeX()) > 0) {
+    
+                t.getSides()[4].setConnected(true);
+                pTile.getSides()[1].setConnected(true);
+                t.notifyObserver();
+            } else if (i == (previousTile - 1) && (previousTile % lvl.getSizeX()) > 0) {
+    
+                t.getSides()[1].setConnected(true);
+                pTile.getSides()[4].setConnected(true);
+                t.notifyObserver();
+            } else if (i == (previousTile + lvl.getSizeX() - 1) && (i % lvl.getSizeX()) > 0) {
+    
+                t.getSides()[5].setConnected(true);
+                pTile.getSides()[2].setConnected(true);
+                t.notifyObserver();
+            } else if (i == (previousTile - lvl.getSizeX() + 1) && (previousTile % lvl.getSizeX()) > 0) {
+    
+                t.getSides()[2].setConnected(true);
+                pTile.getSides()[5].setConnected(true);
+                t.notifyObserver();
+            }
         }
 
-        if (i == (previousTile + lvl.getSizeX())) { // i sous previous
-
-            t.getSides()[0].setConnected(true);
-            pTile.getSides()[3].setConnected(true);
-            t.notifyObserver();
-        } else if (i == (previousTile - lvl.getSizeX())) { // previous sous i
-
-            t.getSides()[3].setConnected(true);
-            pTile.getSides()[0].setConnected(true);
-            t.notifyObserver();
-        }
     }
 
     @Override
