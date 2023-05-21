@@ -16,7 +16,7 @@ public class EditorController extends MouseAdapter {
 
     private Level lvl;
 
-    private Tile previousTile = null;
+    private int previousTile = -1;
 
     public EditorController(BoardView bv, Level l) {
         this.lvl = l;
@@ -26,7 +26,7 @@ public class EditorController extends MouseAdapter {
         l.addObserver(bv);
     }
 
-    private Tile getTileInteracted(MouseEvent e) {
+    private int getTileInteracted(MouseEvent e) {
 
         int xmax = lvl.getSizeX();
         int ymax = lvl.getSizeY();
@@ -73,7 +73,7 @@ public class EditorController extends MouseAdapter {
                 }
 
                 if (ph.contains(e.getPoint())) {
-                    return lvl.getTiles().get(i);
+                    return i;
                 }
             }
         }
@@ -94,52 +94,90 @@ public class EditorController extends MouseAdapter {
             }
 
             if (p.contains(e.getPoint())) {
-                return lvl.getTiles().get(i);
+                return i;
             }
         }
 
-        return null;
-    } 
+        return -1;
+    }
 
     @Override
     public void mousePressed(MouseEvent e) {
 
-        Tile t = getTileInteracted(e);
-        if(t == null) {
+        int i = getTileInteracted(e);
+        if (i == -1) {
             return;
         }
 
-        if(SwingUtilities.isRightMouseButton(e)) {
+        Tile t = lvl.getTiles().get(i);
+
+        if (SwingUtilities.isRightMouseButton(e)) {
             t.setContent(TileComponent.values()[(t.getContent().ordinal() + 1) % TileComponent.values().length]);
             t.notifyObserver();
             return;
         }
 
-        previousTile = t;
+        previousTile = i;
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
 
-        Tile t = getTileInteracted(e);
-        if(t == null) {
+        int i = getTileInteracted(e);
+        if (i == -1 || previousTile == -1) {
             return;
         }
 
-        if(t.equals(previousTile)) {
+        Tile pTile = lvl.getTiles().get(previousTile);
+        Tile t = lvl.getTiles().get(i);
+
+        if (t.equals(pTile)) {
             return;
         }
 
-        if(lvl.getTilesShape() == TileShape.SQUARE) {
-            
+        if (lvl.getTilesShape() == TileShape.SQUARE) {
+
+            if (i == (previousTile + lvl.getSizeX())) { // i sous previous
+
+                t.getSides()[0].setConnected(true);
+                pTile.getSides()[2].setConnected(true);
+                t.notifyObserver();
+            } else if (i == (previousTile - lvl.getSizeX())) { // previous sous i
+
+                t.getSides()[2].setConnected(true);
+                pTile.getSides()[0].setConnected(true);
+                t.notifyObserver();
+            } else if (i == (previousTile + 1) && (i % lvl.getSizeX()) > 0) {
+
+                t.getSides()[3].setConnected(true);
+                pTile.getSides()[1].setConnected(true);
+                t.notifyObserver();
+            } else if (i == (previousTile - 1) && (previousTile % lvl.getSizeX()) > 0) {
+
+                t.getSides()[1].setConnected(true);
+                pTile.getSides()[3].setConnected(true);
+                t.notifyObserver();
+            }
+            return;
         }
 
+        if (i == (previousTile + lvl.getSizeX())) { // i sous previous
+
+            t.getSides()[0].setConnected(true);
+            pTile.getSides()[3].setConnected(true);
+            t.notifyObserver();
+        } else if (i == (previousTile - lvl.getSizeX())) { // previous sous i
+
+            t.getSides()[3].setConnected(true);
+            pTile.getSides()[0].setConnected(true);
+            t.notifyObserver();
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        
-        previousTile = null;
+
+        previousTile = -1;
     }
 
 }
