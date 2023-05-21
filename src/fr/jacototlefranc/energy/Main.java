@@ -21,7 +21,6 @@ public class Main {
                 levels.put(f.getName(), LevelParser.parse(f));
             }
         }
-        LevelParser.saveLevel(levels.get("level3.nrg"));
     }
 
     public static void main(String[] args) {

@@ -3,7 +3,11 @@ package fr.jacototlefranc.energy.controller;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
 import fr.jacototlefranc.energy.model.Level;
+import fr.jacototlefranc.energy.model.LevelParser;
 import fr.jacototlefranc.energy.model.tile.Tile;
 import fr.jacototlefranc.energy.model.tile.info.TileComponent;
 import fr.jacototlefranc.energy.model.tile.info.TileShape;
@@ -78,10 +82,21 @@ public class SettingsController {
                 lvl.addTile(new Tile.TileBuilder().setContent(TileComponent.NONE).setShape(shapeSelected).build());
             }
 
+            JPanel editorView = new JPanel();
+
+            JButton save = new JButton("Save");
+
             BoardView bv = new BoardView(lvl);
 
+            editorView.add(save);
+            editorView.add(bv);
+
             new EditorController(bv, lvl);
-            f.setPanel(bv);
-        });;
+            f.setPanel(editorView);
+
+            save.addActionListener(e1 -> {
+                LevelParser.saveLevel(lvl);
+            });
+        });
     }
 }
