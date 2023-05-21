@@ -20,7 +20,6 @@ import fr.jacototlefranc.energy.view.textures.TextureName;
 public class BoardView extends JPanel implements Observer {
 
     private Level level;
-    TextureManager tm = new TextureManager();
 
     public BoardView(Level lvl) {
         this.level = lvl;
@@ -68,21 +67,21 @@ public class BoardView extends JPanel implements Observer {
 
             if (t.getShape() == TileShape.SQUARE) {
 
-                g2d.drawImage(tm.getTexture(TextureName.SQUARE_OUTLINE, powered), x, y, null);
+                g2d.drawImage(TextureManager.getTexture(TextureName.SQUARE_OUTLINE, powered), x, y, null);
 
                 if (t.getContent() == TileComponent.NONE) {
 
                     for (int i = 0; i < 4; i++) {
                         if (t.getSides()[i].isConnected() && t.getSides()[(i + 1) % 4].isConnected()) {
                             g2d.rotate(Math.toRadians(90 * i), x + 60, y + 60);
-                            g2d.drawImage(tm.getTexture(TextureName.SQUARE_CURVE_LINK, powered), x, y, null);
+                            g2d.drawImage(TextureManager.getTexture(TextureName.SQUARE_CURVE_LINK, powered), x, y, null);
                             g2d.setTransform(old);
                         } else if (t.getSides()[i].isConnected() &&
                                 t.getSides()[(i + 2) % 4].isConnected() &&
                                 !(t.getSides()[(i + 1) % 4].isConnected()) &&
                                 !(t.getSides()[(i + 3) % 4].isConnected())) {
                             g2d.rotate(Math.toRadians(90 * i), x + 60, y + 60);
-                            g2d.drawImage(tm.getTexture(TextureName.SQUARE_LINK_LONG, powered), x, y, null);
+                            g2d.drawImage(TextureManager.getTexture(TextureName.SQUARE_LINK_LONG, powered), x, y, null);
                             g2d.setTransform(old);
                         }
                     }
@@ -92,30 +91,30 @@ public class BoardView extends JPanel implements Observer {
                     for (int i = 0; i < 4; i++) {
                         if (t.getSides()[i].isConnected()) {
                             g2d.rotate(Math.toRadians(90 * i), x + 60, y + 60);
-                            g2d.drawImage(tm.getTexture(TextureName.SQUARE_COMPONENT_LINK, powered), x, y, null);
+                            g2d.drawImage(TextureManager.getTexture(TextureName.SQUARE_COMPONENT_LINK, powered), x, y, null);
                             g2d.setTransform(old);
                         }
                     }
 
                     if (t.getContent() == TileComponent.OUTLET) {
-                        g.drawImage(tm.getTexture(TextureName.SQUARE_OUTLET, powered), x, y, null);
+                        g.drawImage(TextureManager.getTexture(TextureName.SQUARE_OUTLET, powered), x, y, null);
                     } else if (t.getContent() == TileComponent.WIFI) {
-                        g.drawImage(tm.getTexture(TextureName.SQUARE_WIFI, powered), x, y, null);
+                        g.drawImage(TextureManager.getTexture(TextureName.SQUARE_WIFI, powered), x, y, null);
                     } else if (t.getContent() == TileComponent.LIGHTBULB) {
-                        g.drawImage(tm.getTexture(TextureName.SQUARE_LIGHTBULB, powered), x, y, null);
+                        g.drawImage(TextureManager.getTexture(TextureName.SQUARE_LIGHTBULB, powered), x, y, null);
                     }
                 }
 
             } else if (t.getShape() == TileShape.HEXAGON) {
 
-                g.drawImage(tm.getTexture(TextureName.HEXAGONAL_OUTLINE, powered), x, y, null);
+                g.drawImage(TextureManager.getTexture(TextureName.HEXAGONAL_OUTLINE, powered), x, y, null);
 
                 if (t.getContent() != TileComponent.NONE) {
 
                     for (int i = 0; i < 6; i++) {
                         if (t.getSides()[i].isConnected()) {
                             g2d.rotate(Math.toRadians(60 * i), x + 60, y + 52);
-                            g2d.drawImage(tm.getTexture(TextureName.HEXAGONAL_COMPONENT_LINK, powered), x, y, null);
+                            g2d.drawImage(TextureManager.getTexture(TextureName.HEXAGONAL_COMPONENT_LINK, powered), x, y, null);
                             g2d.setTransform(old);
                         }
                     }
@@ -124,11 +123,11 @@ public class BoardView extends JPanel implements Observer {
                     for (int i = 0; i < 6; i++) {
                         if (t.getSides()[i].isConnected() && t.getSides()[(i + 1) % 6].isConnected()) {
                             g2d.rotate(Math.toRadians(60 * i), x + 60, y + 52);
-                            g2d.drawImage(tm.getTexture(TextureName.HEXAGONAL_CURVE_LINK_SHORT, powered), x, y, null);
+                            g2d.drawImage(TextureManager.getTexture(TextureName.HEXAGONAL_CURVE_LINK_SHORT, powered), x, y, null);
                             g2d.setTransform(old);
                         } else if (t.getSides()[i].isConnected() && t.getSides()[(i + 2) % 6].isConnected()) {
                             g2d.rotate(Math.toRadians(60 * i), x + 60, y + 52);
-                            g2d.drawImage(tm.getTexture(TextureName.HEXAGONAL_CURVE_LINK_LONG, powered), x, y, null);
+                            g2d.drawImage(TextureManager.getTexture(TextureName.HEXAGONAL_CURVE_LINK_LONG, powered), x, y, null);
                             g2d.setTransform(old);
                         } else if (t.getSides()[i].isConnected() &&
                                 t.getSides()[(i + 3) % 6].isConnected() &&
@@ -137,18 +136,18 @@ public class BoardView extends JPanel implements Observer {
                                 !t.getSides()[(i + 4) % 6].isConnected() &&
                                 !t.getSides()[(i + 5) % 6].isConnected()) {
                             g2d.rotate(Math.toRadians(60 * i), x + 60, y + 52);
-                            g2d.drawImage(tm.getTexture(TextureName.HEXAGONAL_LINK_LONG, powered), x, y, null);
+                            g2d.drawImage(TextureManager.getTexture(TextureName.HEXAGONAL_LINK_LONG, powered), x, y, null);
                             g2d.setTransform(old);
                         }
                     }
                 }
 
                 if (t.getContent() == TileComponent.OUTLET) {
-                    g.drawImage(tm.getTexture(TextureName.HEXAGONAL_OUTLET, powered), x, y, null);
+                    g.drawImage(TextureManager.getTexture(TextureName.HEXAGONAL_OUTLET, powered), x, y, null);
                 } else if (t.getContent() == TileComponent.WIFI) {
-                    g.drawImage(tm.getTexture(TextureName.HEXAGONAL_WIFI, powered), x, y, null);
+                    g.drawImage(TextureManager.getTexture(TextureName.HEXAGONAL_WIFI, powered), x, y, null);
                 } else if (t.getContent() == TileComponent.LIGHTBULB) {
-                    g.drawImage(tm.getTexture(TextureName.HEXAGONAL_LIGHTBULB, powered), x, y, null);
+                    g.drawImage(TextureManager.getTexture(TextureName.HEXAGONAL_LIGHTBULB, powered), x, y, null);
                 }
             }
         }

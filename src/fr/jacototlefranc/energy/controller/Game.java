@@ -3,7 +3,6 @@ package fr.jacototlefranc.energy.controller;
 import java.io.File;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import fr.jacototlefranc.energy.model.Level;
 import fr.jacototlefranc.energy.model.LevelParser;

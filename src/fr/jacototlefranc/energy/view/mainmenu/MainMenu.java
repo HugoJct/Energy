@@ -40,12 +40,10 @@ public class MainMenu extends JPanel {
         JLabel outletLabel1 = new JLabel();
         JLabel outletLabel2 = new JLabel();
 
-        TextureManager tm = new TextureManager();
-
-        BufferedImage outletLit = tm.getTexture(TextureName.SQUARE_LIGHTBULB, true);
+        BufferedImage outletLit = TextureManager.getTexture(TextureName.SQUARE_LIGHTBULB, true);
         ImageIcon outletIconLit = new ImageIcon(outletLit);
 
-        BufferedImage outlet = tm.getTexture(TextureName.SQUARE_LIGHTBULB, false);
+        BufferedImage outlet = TextureManager.getTexture(TextureName.SQUARE_LIGHTBULB, false);
         ImageIcon outletIcon = new ImageIcon(outlet);
 
         /*
