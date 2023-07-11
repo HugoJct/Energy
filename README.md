@@ -1,4 +1,4 @@
 # energy
 
-Sujet du projet [ici] (doc/energy.pdf)
+Sujet du projet [ici](doc/energy.pdf)
 
